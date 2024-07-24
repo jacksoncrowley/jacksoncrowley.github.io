@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Jackson Crowley</title>
+    <link>jacksoncrowley.github.io/posts/</link>
+    <description>Recent content in Posts on Jackson Crowley</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 23 Jul 2024 11:30:00 +0200</lastBuildDate>
+    <atom:link href="jacksoncrowley.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How to Use Flat-Bottomed Potentials in GROMACS</title>
+      <link>jacksoncrowley.github.io/posts/flat-bottomed-potentials-gromacs/</link>
+      <pubDate>Tue, 23 Jul 2024 11:30:00 +0200</pubDate>
+      <guid>jacksoncrowley.github.io/posts/flat-bottomed-potentials-gromacs/</guid>
+      <description>Flat bottomed potentials (FBPs) are a unique (and powerful) type of restraint we can apply to specific particles in a molecular dynamics simulation.&#xA;In short, we define a fixed geometric region within the simulation box to which certain atoms will either be attracted or repelled.&#xA;They&amp;rsquo;re also a little tricky to understand from a technical perspective.&#xA;In this post, I&amp;rsquo;ll briefly discuss the maths, how to implement an FBP in the topology and restraints files, and finish up with some practical notes for usage.</description>
+    </item>
+    <item>
+      <title>Math examples</title>
+      <link>jacksoncrowley.github.io/posts/math_examples/</link>
+      <pubDate>Wed, 24 Jan 2024 18:09:49 -0800</pubDate>
+      <guid>jacksoncrowley.github.io/posts/math_examples/</guid>
+      <description>This is an inline \(a^*=x-b^*\) equation.&#xA;These are block equations:&#xA;\[a^*=x-b^*\] \[ a^*=x-b^* \] \[ a^*=x-b^* \] These are block equations using alternate delimiters:&#xA;$$a^*=x-b^*$$ $$ a^*=x-b^* $$ $$ a^*=x-b^* $$ </description>
+    </item>
+  </channel>
+</rss>
