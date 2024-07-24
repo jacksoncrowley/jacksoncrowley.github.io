@@ -12,7 +12,6 @@
 
 
 
-<meta name="author" content="Jackson Crowley">
 <meta name="description" content="Flat bottomed potentials (FBPs) are a unique (and powerful) type of restraint we can apply to specific particles in a molecular dynamics simulation.
 In short, we define a fixed geometric region within the simulation box to which certain atoms will either be attracted or repelled.
 They&rsquo;re also a little tricky to understand from a technical perspective.
@@ -34,7 +33,7 @@ In this post, I’ll briefly discuss the maths, how to implement an FBP in the t
 In short, we define a fixed geometric region within the simulation box to which certain atoms will either be attracted or repelled.
 They’re also a little tricky to understand from a technical perspective.
 In this post, I’ll briefly discuss the maths, how to implement an FBP in the topology and restraints files, and finish up with some practical notes for usage.">
-  <meta property="og:locale" content="en">
+  <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2024-07-23T11:30:00+02:00">
@@ -128,15 +127,15 @@ In this post, I’ll briefly discuss the maths, how to implement an FBP in the t
             </li>
           
             <li class="navigation-item">
-              <a class="navigation-link " href="/posts/">Technical Blog</a>
-            </li>
-          
-            <li class="navigation-item">
               <a class="navigation-link " href="https://drive.google.com/file/d/1yASb15IHVH_a3FozN1d57cFaOLOMZgYU/view?pli=1">CV</a>
             </li>
           
             <li class="navigation-item">
-              <a class="navigation-link " href="https://invisiblewalls.substack.com">Substack</a>
+              <a class="navigation-link " href="/posts/">Technical Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="https://invisiblewalls.substack.com">Writing</a>
             </li>
           
         
@@ -206,7 +205,7 @@ with the most important parameters being:</p>
 <li>$H$, the Heaviside step function which &ldquo;turns on&rdquo; the force constant once a restrained atom leaves the FBP region.</li>
 </ul>
 <p>Now, let&rsquo;s have a look at an image from the GROMACS manual:</p>
-<p><img src="https://manual.gromacs.org/2024.2/_images/fbposres.png"></p>
+<p><img src="https://manual.gromacs.org/2024.2/_images/fbposres.png" alt=""></p>
 <p>Figure A shows a &ldquo;positive&rdquo; (non-inverted) FBP, which <strong>keeps a chosen atom within a certain shape</strong>, by applying a force of $k$ if the restrained particle strays outside of the radius $r_{fb}$.</p>
 <p>Figure B shows a &ldquo;negative&rdquo; (inverted) FBP, which instead <strong>keeps the particle away from the shape</strong>.</p>
 <hr>
@@ -223,7 +222,7 @@ with the most important parameters being:</p>
 <li>a <code>restraints.gro</code> file which <strong>contains the x, y, and z coordinates</strong> of our FBP region for a given atom</li>
 </ol>
 <p>To show how the two work together, let&rsquo;s walk through an example from one of my previous projects (<a href="https://github.com/MoMS-MMSB/lipid_sorting"  class="external-link" target="_blank" rel="noopener">GitHub</a>, <a href="https://doi.org/10.1016/bs.mie.2024.03.022"  class="external-link" target="_blank" rel="noopener">Publication</a>), in which we use FBPs to define a pore region in a coarse-grained (Martini 3) membrane tubule, to stop lipids from passing through the pore.</p>
-<p><img src="https://github.com/MoMS-MMSB/lipid_sorting/blob/main/figures/Renders/POPC_POPE_r10_l10_pore/x_110_5deg_dof_notrj.gif?raw=true"></p>
+<p><img src="https://github.com/MoMS-MMSB/lipid_sorting/blob/main/figures/Renders/POPC_POPE_r10_l10_pore/x_110_5deg_dof_notrj.gif?raw=true" alt=""></p>
 <!-- raw HTML omitted -->
 <hr>
 <h4 id="topology-file">
@@ -360,7 +359,7 @@ with the most important parameters being:</p>
     ©
     
     2024
-     Jackson Crowley 
+    
     ·
     
     Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.

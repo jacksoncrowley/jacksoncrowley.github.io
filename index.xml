@@ -5,7 +5,7 @@
     <link>https://jacksoncrowley.xyz/</link>
     <description>Recent content on Jackson Crowley</description>
     <generator>Hugo</generator>
-    <language>en</language>
+    <language>en-us</language>
     <lastBuildDate>Tue, 23 Jul 2024 11:30:00 +0200</lastBuildDate>
     <atom:link href="https://jacksoncrowley.xyz/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -20,7 +20,7 @@
       <link>https://jacksoncrowley.xyz/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://jacksoncrowley.xyz/about/</guid>
-      <description>Jackson Crowley Link to heading I use computers to simulate biological systems.&#xA;Specifically, I&amp;rsquo;m a PhD Student in computational biophysics based in Lyon, France.&#xA;I work on atomistic and coarse-grained molecular dynamics simulations of lipid droplets (and more).</description>
+      <description>About Me Link to heading I&amp;rsquo;m an Australian PhD Student in computational biophysics at the Molecular Microbology and Structural Biochemistry (MMSB) unit of the Centre national de la recherche scientifique (CNRS), **based in Lyon, France.&#xA;Specifically, I work on atomistic and coarse-grained molecular dynamics simulations of lipid droplets (and more). The biogenesis of these tiny organelles, fundamental to energy metabolism within the cell, is extremely difficult to study expexperimentally, due to their highly fluid nature and the fact that they often only consists of a few hundred molecules when they are first created.</description>
     </item>
   </channel>
 </rss>
