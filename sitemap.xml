@@ -2,19 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/posts/flat-bottomed-potentials-gromacs/</loc>
+    <loc>https://www.jacksoncrowley.xyz/posts/flat-bottomed-potentials-gromacs/</loc>
     <lastmod>2024-07-23T11:30:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://www.jacksoncrowley.xyz/</loc>
     <lastmod>2024-07-23T11:30:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
+    <loc>https://www.jacksoncrowley.xyz/posts/</loc>
     <lastmod>2024-07-23T11:30:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/about/</loc>
+    <loc>https://www.jacksoncrowley.xyz/about/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://www.jacksoncrowley.xyz/categories/</loc>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://www.jacksoncrowley.xyz/tags/</loc>
   </url>
 </urlset>
