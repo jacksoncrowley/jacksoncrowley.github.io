@@ -6,8 +6,22 @@
     <description>Recent content in Tags on Jackson Crowley</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jul 2024 11:30:00 +0200</lastBuildDate>
+    <lastBuildDate>Thu, 01 Aug 2024 17:00:00 +0200</lastBuildDate>
     <atom:link href="https://jacksoncrowley.xyz/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Psi4</title>
+      <link>https://jacksoncrowley.xyz/tags/psi4/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://jacksoncrowley.xyz/tags/psi4/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Qm</title>
+      <link>https://jacksoncrowley.xyz/tags/qm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://jacksoncrowley.xyz/tags/qm/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Gromacs</title>
       <link>https://jacksoncrowley.xyz/tags/gromacs/</link>
