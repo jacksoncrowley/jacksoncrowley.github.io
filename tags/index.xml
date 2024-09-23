@@ -2,38 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Jackson Crowley</title>
-    <link>https://jacksoncrowley.xyz/tags/</link>
+    <link>http://localhost:1313/tags/</link>
     <description>Recent content in Tags on Jackson Crowley</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 01 Aug 2024 17:00:00 +0200</lastBuildDate>
-    <atom:link href="https://jacksoncrowley.xyz/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Psi4</title>
-      <link>https://jacksoncrowley.xyz/tags/psi4/</link>
+      <link>http://localhost:1313/tags/psi4/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://jacksoncrowley.xyz/tags/psi4/</guid>
+      <guid>http://localhost:1313/tags/psi4/</guid>
       <description></description>
     </item>
     <item>
       <title>Qm</title>
-      <link>https://jacksoncrowley.xyz/tags/qm/</link>
+      <link>http://localhost:1313/tags/qm/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://jacksoncrowley.xyz/tags/qm/</guid>
+      <guid>http://localhost:1313/tags/qm/</guid>
       <description></description>
     </item>
     <item>
       <title>Gromacs</title>
-      <link>https://jacksoncrowley.xyz/tags/gromacs/</link>
+      <link>http://localhost:1313/tags/gromacs/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://jacksoncrowley.xyz/tags/gromacs/</guid>
+      <guid>http://localhost:1313/tags/gromacs/</guid>
       <description></description>
     </item>
     <item>
       <title>Md</title>
-      <link>https://jacksoncrowley.xyz/tags/md/</link>
+      <link>http://localhost:1313/tags/md/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://jacksoncrowley.xyz/tags/md/</guid>
+      <guid>http://localhost:1313/tags/md/</guid>
       <description></description>
     </item>
   </channel>

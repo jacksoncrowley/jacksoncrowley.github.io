@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Psi4 on Jackson Crowley</title>
-    <link>https://jacksoncrowley.xyz/tags/psi4/</link>
+    <link>http://localhost:1313/tags/psi4/</link>
     <description>Recent content in Psi4 on Jackson Crowley</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 01 Aug 2024 17:00:00 +0200</lastBuildDate>
-    <atom:link href="https://jacksoncrowley.xyz/tags/psi4/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/psi4/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>My first QM: From SMILES string to dihedral scan</title>
-      <link>https://jacksoncrowley.xyz/posts/smiles-to-qm/</link>
+      <link>http://localhost:1313/posts/smiles-to-qm/</link>
       <pubDate>Thu, 01 Aug 2024 17:00:00 +0200</pubDate>
-      <guid>https://jacksoncrowley.xyz/posts/smiles-to-qm/</guid>
+      <guid>http://localhost:1313/posts/smiles-to-qm/</guid>
       <description>This post goes over my first attempt at starting with nothing but a SMILES string, converting that into a molecule file with optimised geometry, and performing some basic QM calculations in Psi4 to do a dihedral scan. There are also a few notes on quantum chemistry, but be warned: having never formally studied the stuff, I may have made some extremely embarassing errors (and am very open to being corrected).</description>
     </item>
   </channel>
