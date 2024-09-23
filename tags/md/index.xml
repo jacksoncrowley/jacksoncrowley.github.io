@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Md on Jackson Crowley</title>
-    <link>http://localhost:1313/tags/md/</link>
+    <link>https://jacksoncrowley.xyz/tags/md/</link>
     <description>Recent content in Md on Jackson Crowley</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 23 Jul 2024 11:30:00 +0200</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/md/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://jacksoncrowley.xyz/tags/md/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>How to Use Flat-Bottomed Potentials in GROMACS</title>
-      <link>http://localhost:1313/posts/flat-bottomed-potentials-gromacs/</link>
+      <link>https://jacksoncrowley.xyz/posts/flat-bottomed-potentials-gromacs/</link>
       <pubDate>Tue, 23 Jul 2024 11:30:00 +0200</pubDate>
-      <guid>http://localhost:1313/posts/flat-bottomed-potentials-gromacs/</guid>
+      <guid>https://jacksoncrowley.xyz/posts/flat-bottomed-potentials-gromacs/</guid>
       <description>Flat bottomed potentials (FBPs) are a unique (and powerful) type of restraint we can apply to specific particles in a molecular dynamics simulation.&#xA;In short, we define a fixed geometric region within the simulation box to which certain atoms will either be attracted or repelled.&#xA;They&amp;rsquo;re also a little tricky to understand from a technical perspective.&#xA;In this post, I&amp;rsquo;ll briefly discuss the maths, how to implement an FBP in the topology and restraints files, and finish up with some practical notes for usage.</description>
     </item>
   </channel>

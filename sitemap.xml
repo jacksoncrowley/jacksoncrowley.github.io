@@ -2,35 +2,35 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://jacksoncrowley.xyz/</loc>
     <lastmod>2024-08-01T17:00:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/smiles-to-qm/</loc>
+    <loc>https://jacksoncrowley.xyz/posts/smiles-to-qm/</loc>
     <lastmod>2024-08-01T17:00:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
+    <loc>https://jacksoncrowley.xyz/posts/</loc>
     <lastmod>2024-08-01T17:00:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/psi4/</loc>
+    <loc>https://jacksoncrowley.xyz/tags/psi4/</loc>
     <lastmod>2024-08-01T17:00:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/qm/</loc>
+    <loc>https://jacksoncrowley.xyz/tags/qm/</loc>
     <lastmod>2024-08-01T17:00:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://jacksoncrowley.xyz/tags/</loc>
     <lastmod>2024-08-01T17:00:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/gromacs/</loc>
+    <loc>https://jacksoncrowley.xyz/tags/gromacs/</loc>
     <lastmod>2024-07-23T11:30:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/flat-bottomed-potentials-gromacs/</loc>
+    <loc>https://jacksoncrowley.xyz/posts/flat-bottomed-potentials-gromacs/</loc>
     <lastmod>2024-07-23T11:30:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/md/</loc>
+    <loc>https://jacksoncrowley.xyz/tags/md/</loc>
     <lastmod>2024-07-23T11:30:00+02:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/about/</loc>
+    <loc>https://jacksoncrowley.xyz/about/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://jacksoncrowley.xyz/categories/</loc>
   </url>
 </urlset>

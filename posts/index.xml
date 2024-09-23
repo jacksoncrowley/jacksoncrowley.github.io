@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Jackson Crowley</title>
-    <link>http://localhost:1313/posts/</link>
+    <link>https://jacksoncrowley.xyz/posts/</link>
     <description>Recent content in Posts on Jackson Crowley</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 01 Aug 2024 17:00:00 +0200</lastBuildDate>
-    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://jacksoncrowley.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>My first QM: From SMILES string to dihedral scan</title>
-      <link>http://localhost:1313/posts/smiles-to-qm/</link>
+      <link>https://jacksoncrowley.xyz/posts/smiles-to-qm/</link>
       <pubDate>Thu, 01 Aug 2024 17:00:00 +0200</pubDate>
-      <guid>http://localhost:1313/posts/smiles-to-qm/</guid>
+      <guid>https://jacksoncrowley.xyz/posts/smiles-to-qm/</guid>
       <description>This post goes over my first attempt at starting with nothing but a SMILES string, converting that into a molecule file with optimised geometry, and performing some basic QM calculations in Psi4 to do a dihedral scan. There are also a few notes on quantum chemistry, but be warned: having never formally studied the stuff, I may have made some extremely embarassing errors (and am very open to being corrected).</description>
     </item>
     <item>
       <title>How to Use Flat-Bottomed Potentials in GROMACS</title>
-      <link>http://localhost:1313/posts/flat-bottomed-potentials-gromacs/</link>
+      <link>https://jacksoncrowley.xyz/posts/flat-bottomed-potentials-gromacs/</link>
       <pubDate>Tue, 23 Jul 2024 11:30:00 +0200</pubDate>
-      <guid>http://localhost:1313/posts/flat-bottomed-potentials-gromacs/</guid>
+      <guid>https://jacksoncrowley.xyz/posts/flat-bottomed-potentials-gromacs/</guid>
       <description>Flat bottomed potentials (FBPs) are a unique (and powerful) type of restraint we can apply to specific particles in a molecular dynamics simulation.&#xA;In short, we define a fixed geometric region within the simulation box to which certain atoms will either be attracted or repelled.&#xA;They&amp;rsquo;re also a little tricky to understand from a technical perspective.&#xA;In this post, I&amp;rsquo;ll briefly discuss the maths, how to implement an FBP in the topology and restraints files, and finish up with some practical notes for usage.</description>
     </item>
   </channel>
