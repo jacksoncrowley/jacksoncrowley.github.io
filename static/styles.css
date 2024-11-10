@@ -10,7 +10,8 @@
 }
 
 :root {
-  --maincolor: #A4D8D8;
+  /*--maincolor: #A4D8D8; */
+  --maincolor: #b59bb5;
   --headerfont: 'Nunito Sans';
   --bodyfont: 'Nunito Sans';
 }
@@ -42,6 +43,7 @@ header {
     width: 100px;
     height: 100px;
     border-radius: 50%;
+    border: 5px solid var(--maincolor);
     overflow: hidden;
     margin-right: 20px;
 }
