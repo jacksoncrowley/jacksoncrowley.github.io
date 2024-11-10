@@ -13,23 +13,23 @@
           <img src="static/avatar.jpg">
         </div>
         <div class="header-text">
-          <h1>Jackson Crowley</h1>
-          <p class="subtitle">Computational Biologist</p>
+          <h1>JACKSON CROWLEY</h1>
+          <!--          <p class="subtitle">Computational Biologist</p> -->
             <nav>
-              <a href="/">Home</a>
-              <a href="/">About</a>
+              <a href="/">CV</a>
+              <a href="/">GITHUB</a>
             </nav>
         </div>
       </div>
     </header>
     <main>
         <section id="posts">
-            <h2>Recent Posts</h2>
+            <h2>Posts</h2>
             {% for post in posts %}
             <article>
-                <h3><a href="/posts/{{ post.slug }}.html">{{ post.title }}</a></h3>
-                <time datetime="{{ post.date }}">{{ post.date }}</time>
-                <p>Tags: {% for tag in post.tags %}<a href="/tags/{{ tag }}.html">{{ tag }}</a> {% endfor %}</p>
+                  <h4><a href="/posts/{{ post.slug }}.html">{{ post.title }}</a></h3>
+                  <time datetime="{{ post.date }}">{{ post.date }}</time>
+                  <!--              <p>Tags: {% for tag in post.tags %}<a href="/tags/{{ tag }}.html">{{ tag }}</a> {% endfor %}</p> -->
             </article>
             {% endfor %}
         </section>
