@@ -102,16 +102,11 @@ p {
   font-family: var(--bodyfont), sans-serif;
   line-height: 1.5;
 }
-
-#posts {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0;
-}
-
 section {
-  padding-bottom:10px;
+  padding-top:10px
+  padding-bottom:50px;
 }
+
 
 /* Code Block Styles */
 pre {

@@ -26,20 +26,20 @@
       <section id="about">
         <p>PhD Student, Computational Biophysics.</p>
       </section>
-        <section id="posts">
-            <h2>Posts</h2>
-            {% for post in posts %}
-            <article>
-                  <h4><a href="/posts/{{ post.slug }}.html">{{ post.title }}</a></h3>
-                  <time datetime="{{ post.date }}">{{ post.date }}</time>
-            </article>
-            {% endfor %}
-        </section>
-        <section id="projects">
-            <h2>Projects</h2>
-            <h4><a href="http://smoptimizer.jacksoncrowley.xyz">Smoptimizer</a></h4>
-            <p>Generate 3D structures from SMILES strings using openbabel, running on a Google Cloud VM.</p>
-        </section>
+      <section id="posts">
+          <h2>Posts</h2>
+          {% for post in posts %}
+          <article>
+              <h4><a href="/posts/{{ post.slug }}.html">{{ post.title }}</a></h3>
+                <time datetime="{{ post.date }}">{{ post.date }}</time>
+          </article>
+          {% endfor %}
+      </section>
+      <section id="projects">
+          <h2>Projects</h2>
+          <h4><a href="http://smoptimizer.jacksoncrowley.xyz">SMOptimizer</a></h4>
+          <p>Generate 3D structures from SMILES strings using openbabel, running on a Google Cloud VM.</p>
+      </section>
     </main>
 
 <!--    <footer>
