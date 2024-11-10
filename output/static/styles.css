@@ -44,6 +44,7 @@ header {
 
 .header-text {
   text-align: left;
+  align-self: flex-end;
 }
 
 h1 {
@@ -65,10 +66,9 @@ nav {
 }
 
 nav a {
-    color: #000000;  /* Blue link color */
-    margin-top: 20 0;
+    color: #000000;
     font-size: 1.2rem;
-    text-decoration: none;  /* Remove underline on hover */
+    text-decoration: none;
 }
 
 nav a:hover {
@@ -76,8 +76,9 @@ nav a:hover {
     font-weight: bold;
     text-decoration: underline dotted;
 }
+
 main {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 1em;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1em;
 }
