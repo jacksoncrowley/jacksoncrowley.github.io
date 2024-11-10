@@ -48,9 +48,8 @@ with the most important parameters being:
 <h4>Topology File</h4>
 <p>To make these pores, I wanted two cylindrical FBPs crossing the box, one in x, one in y. By defining a negative radius of -2.5nm, I'm keeping the restrained molecules out of the FBP geometries. And I wanted a strong force constant, k=5000 (where k=$KJ \cdot mol^{-1}\cdot nm^{-2}$). </p>
 <p>I define all of these in the <strong>itp file for the molecule I want to restrain</strong> (here, my coarse-grained phospholipid).</p>
-<p>```</p>
-<h1>ifdef POSRES_PL</h1>
-<p>; Flat-bottomed position restraint for each PL
+<pre><code>#ifdef POSRES_PL
+; Flat-bottomed position restraint for each PL
 [ position_restraints ]
 ; numatoms  functype  g   r   k
 ;                       (nm) (kJ mol−1nm−2)
@@ -69,9 +68,9 @@ with the most important parameters being:
        09      2      7  -2.5   5000
        10      2      7  -2.5   5000
        11      2      7  -2.5   5000
-       12      2      7  -2.5   5000</p>
-<h1>endif</h1>
-<p>```</p>
+       12      2      7  -2.5   5000
+#endif
+</code></pre>
 <ol>
 <li>
 <p>The atom number within the molecule I'm restraining. </p>
@@ -93,8 +92,8 @@ with the most important parameters being:
 <hr />
 <h4>Restraints File</h4>
 <p>However, you may notice that we haven't yet centered the FBP anywhere! This is where the <code>restraints.gro</code> file comes in.</p>
-<p>A snippet from my <code>restraints.gro</code> file looks like this:
-<code>Expect a large membrane in water
+<p>A snippet from my <code>restraints.gro</code> file looks like this:</p>
+<pre><code>Expect a large membrane in water
 71260
     1POPC   NC3    1  14.799  14.799  05.000
     1POPC   PO4    2  14.799  14.799  05.000
@@ -104,7 +103,8 @@ with the most important parameters being:
 ...
 55975W        W75687  10.673  25.982   5.496  0.0510  0.0486 -0.2671
 55976W        W75688  22.924  23.116   3.672  0.0720  0.0694 -0.1156
-  29.59805  29.59805  10.00000</code></p>
+  29.59805  29.59805  10.00000
+</code></pre>
 <p>Since I'm <strong>restraining the POPC</strong> lipids, I define the FBP center of geometry on the POPC particles/atoms as x,y,z in the gro file coordinates. </p>
 <p>Since I'm <strong>not restraining the water (W)</strong> molecules, they can simply be left as is.</p>
 <p>On my <a href="https://gist.github.com/jacksoncrowley/cdb4dffaefd14edd2a44f12b54e45b83">github</a> I have a script that will take care of this, which would generate a restraints file from your starting structure file, which would be run as:</p>

@@ -44,12 +44,13 @@ $</p>
 <p>Of course, we need a software package to take care of this for us. I've opted to go with <a href="https://psicode.org/">Psi4</a>, a pretty-widely used open-source package that runs using python, built atop C++. I'm comfortable enough with python, and more importantly, I <em>really</em> didn't want to have to learn piece of software, and Psi4 looked legit and easy enough to make work. I set up a new conda environment and got started.</p>
 <h2>getting a starting structure from a SMILES string</h2>
 <p>The dihedral I want to parameterise comes from cholesteryl oleate, an awfully large molecule (by QM standards, maybe). I decided instead to take a small portion which has the dihedral I want, a <a href="https://pubchem.ncbi.nlm.nih.gov/compound/Cyclohexyl-acetate">cyclohexyl acetate</a>:</p>
-<p>I can take the SMILES string and generate a 3d structure using <code>openbabel</code>[^2]:
-<code>openbabel -:"CC(=O)OC1CCCCC1" -oxyz -O CHA.xyz --gen3d # generating an .xyz file</code></p>
+<p>I can take the SMILES string and generate a 3d structure using <code>openbabel</code>[^2]:</p>
+<pre><code>openbabel -:&quot;CC(=O)OC1CCCCC1&quot; -oxyz -O CHA.xyz --gen3d # generating an .xyz file
+</code></pre>
 <p>Generating an .xyz file [^3], which looks like:</p>
-<p>```
-24</p>
-<p>C          1.11274        0.33165       -0.17130
+<pre><code>24
+
+C          1.11274        0.33165       -0.17130
 C          2.59623        0.29037       -0.37507
 O          3.14111       -0.14618       -1.37891
 O          3.22834        0.83932        0.69728
@@ -73,7 +74,7 @@ H          7.08235        2.35996        0.79633
 H          6.92364        2.75926        2.50528
 H          4.74681        2.94859        1.28212
 H          4.67278        1.79802        2.59618
-```</p>
+</code></pre>
 <p>It's an extremely simple format: the first line shows us we have 24 atoms, the second line is blank, but you can write a descriptor "i.e. Cyclohexyl acetate"[^4], and the rest of the lines are organised to show the atom type and it's x, y, z cartesian coordinates. </p>
 <h2>optimising the geometry</h2>
 <p>Using the <code>obminimize</code> function of <code>openbabel</code>, we can perform a basic energy minimisation of our molecule.</p>
@@ -81,10 +82,11 @@ H          4.67278        1.79802        2.59618
 <p>But we really should optimise our starting geometry as much as possible, and so we can use our QM engine to optimise the geometry further in accordance with the level of theory we've chosen. Since I want to generate atomistic parameters for the CHARMM36 MD forcefield, and previous similar parameterisation efforts have used the MP2/CC-PVDZ level of theory, I think it's where I'll start.</p>
 <p>Psi4 has a jupyter/python API, but it also takes an input file written in <code>psithon</code>; basically python with some extra, psi4-specific stuff.</p>
 <p>My input file to optimise the geometry of our pre-optimised molecule (<code>psi4_optimise.dat</code>) is as follows:</p>
-<p>```
-import psi4</p>
-<p>memory 16GB</p>
-<p>molecule = psi4.geometry("""
+<pre><code>import psi4
+
+memory 16GB
+
+molecule = psi4.geometry(&quot;&quot;&quot;
 24
 CHA.2.xyz 
 C          1.04300       -0.28100        0.19400
@@ -111,34 +113,37 @@ H          7.02100       -2.47100        0.61900
 H          6.88500       -3.73700       -0.60000
 H          4.68700       -3.23100        0.48500
 H          4.64800       -2.97900       -1.24400
-""")
+&quot;&quot;&quot;)
 set {
     basis cc-pvdz
     energy mp2
     scf_type df
 }
-optimize('scf')</p>
-<p>molecule.save_xyz_file("CHA.3.xyz",1)
-```</p>
+optimize('scf')
+
+molecule.save_xyz_file(&quot;CHA.3.xyz&quot;,1)
+</code></pre>
 <p><code>scf_type df</code>, by the way, refers to the <strong>Self-Consistent Field</strong> procedure, which is the iterative process of solving the Schrödinger equation repeatedly to update the coefficients describing our orbitals, which we repeat until they converge. <strong>Density Fitting</strong> (DF)-SCF is a way of speeding up the procedure by introducing more approximations, although apparently the loss of accuracy is quite minimal.</p>
 <p>Running on 4 cores with <code>psi4 psi4_optimise.dat -n 4</code>, it finishes in about 3 minutes.</p>
 <h2>the dihedral scan</h2>
 <p>When doing a dihedral scan, what we're doing is fixing this dihedral at a given value, optimising the geometry to calculate the potential energy on the system, rotating the dihedral by a small amount, and repeating. We then return the potential energy vs. dihedral angle at the end, to plot the potential energy landscape (is this a correct term?) of the dihedral.</p>
 <p>I know from looking at the structure that the dihedral I'm after is D(2,4,5,10), where the numbers are the atom indices in our input structure. When I look in the output file, <code>psi4_optimise.out</code>, I can look for the value of this dihedral angle in the final optimisation step, and I see:</p>
-<p><code>Coordinate      Previous         Force          Change          New
+<pre><code>Coordinate      Previous         Force          Change          New
 ...
-D(2,4,5,10)     153.95468       -0.00000       -0.00160     153.95308</code>
-Giving us an optimised dihedral value of 153.95308 once the program has converged. </p>
+D(2,4,5,10)     153.95468       -0.00000       -0.00160     153.95308
+</code></pre>
+<p>Giving us an optimised dihedral value of 153.95308 once the program has converged. </p>
 <p>This is our starting point. Since I want to do a 360 degree scan at 10 degree intervals, I write a simple function to start indexing at 150 and work it's way all around, back to 140, where the scan will finish:</p>
-<p><code>def define_angles(psi=0):
+<pre><code>def define_angles(psi=0):
     angles = np.arange(0, 360, 10) - 170
     idx = np.where(angles == int(psi))[0][0]
-    return(np.concatenate([angles[idx:], angles[:idx]]))</code>
-This is just generating a list from -170 to 180, and then deciding to start from our chosen <code>psi</code> value by cutting the original list at that point and rearranging it.</p>
+    return(np.concatenate([angles[idx:], angles[:idx]]))
+</code></pre>
+<p>This is just generating a list from -170 to 180, and then deciding to start from our chosen <code>psi</code> value by cutting the original list at that point and rearranging it.</p>
 <p>The actual implementation of the dihedral scan will look something like this:</p>
-<p>```
-dih_range = define_angles(150)</p>
-<p>for psi in dih_range:
+<pre><code>dih_range = define_angles(150)
+
+for psi in dih_range:
     geometric_keywords = {
       'coordsys' : 'tric',
       'constraints' : {
@@ -148,11 +153,11 @@ dih_range = define_angles(150)</p>
       }
     }
     E = optimize('scf', engine='geometric', optimizer_keywords=geometric_keywords)
-    out = f"CHA.{psi}.xyz"
+    out = f&quot;CHA.{psi}.xyz&quot;
     print(psi, E)
     PES_C.append((psi, E))
     molecule.save_xyz_file(out,1)
-```</p>
+</code></pre>
 <p>And voila - provided I haven't done anything horribly wrong, we have successfully done our dihedral scan!</p>
 <p>[^1]: this is the time-independent form of the equation; there's also a time-dependent form, given as:
 $\left[ -\frac{\hbar^2}{2m} \nabla^2 + V(\mathbf{r}) \right] \Psi(\mathbf{r}) = E \Psi(\mathbf{r})$</p>
