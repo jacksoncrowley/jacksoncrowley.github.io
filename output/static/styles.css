@@ -108,8 +108,7 @@ p {
   line-height: 1.5;
 }
 section {
-  padding-top:10px
-  padding-bottom:50px;
+  margin-bottom:20px;
 }
 
 
@@ -155,7 +154,7 @@ main {
   }
 
   body {
-      background-color: black;
+      background-color: #0d0004;
   }
 
   .avatar {
