@@ -11,7 +11,7 @@
 
 :root {
   --maincolor: #A4D8D8;
-  --headerfont: 'IBM Plex Mono';
+  --headerfont: 'Nunito Sans';
   --bodyfont: 'Nunito Sans';
 }
 
@@ -110,20 +110,26 @@ p {
 section {
   padding-bottom:10px;
 }
+
 /* Code Block Styles */
 pre {
-    background-color: #f5f5f5;   /* Light background color for code blocks */
+    background-color: #f5f5f5;
     padding: 1em;                /* Padding around the code */
-    border-radius: 5px;          /* Rounded corners */
+    border-radius: 20px;
     overflow-x: auto;            /* Horizontal scroll for long lines */
+    overflow: hidden;
     font-size: 0.95em;           /* Slightly smaller font size */
     margin: 1em 0;               /* Space around the code block */
 }
 
 code {
-    font-family: var(--headertext), Courier, monospace;
-    color: #d63384;
+    font-family: var(--headerfont), monospace;
+    background-color: #f5f5f5;
+    border-radius: 3px;
+    padding: 0.2em 0.4em;
+    color: #333;
 }
+
 pre code {
     color: #333;
 }
