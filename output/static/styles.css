@@ -104,7 +104,11 @@ p {
 #posts {
     max-width: 800px;
     margin: 0 auto;
-    padding: 1em;
+    padding: 0;
+}
+
+section {
+  padding-bottom:20px;
 }
 main {
     max-width: 800px;
