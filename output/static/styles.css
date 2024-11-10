@@ -10,27 +10,28 @@
 }
 
 :root {
-  /*--maincolor: #A4D8D8; */
-  --maincolor: #b59bb5;
+  --maincolor: #A4D8D8;
   --mainfont: 'Nunito Sans';
   --codefont: 'IBM Plex Mono';
+  --fontcolor: black;
 }
 
 /* Body and Background */
 body {
     font-family: var(--mainfont), monospace;
     background-color: #fbfbfb;
-    color: #000000;
+    color: var(--fontcolor);
     padding: 20px;
     text-align: left;
 }
 
 /* Header Styles */
 header {
-    color: #000000;
+    color: var(--fontcolor);
     padding: 20px 0;
     max-width: 800px;
     margin: auto;
+    font-weight: 700;
 }
 
 .header-content {
@@ -46,6 +47,9 @@ header {
     border: 5px solid var(--maincolor);
     overflow: hidden;
     margin-right: 20px;
+    background-image: url('avatar_light.png');
+    background-size: cover;
+    background-position: center;
 }
 
 .avatar img {
@@ -67,7 +71,7 @@ h1 {
 
 .subtitle {
     font-size: 1rem;
-    color: #000000;
+    color: var(--fontcolor);
     margin-top:5px;
 }
 
@@ -79,14 +83,14 @@ nav {
 }
 
 a {
-    color: #000000;
+    color: var(--fontcolor);
     text-decoration: underline;
     text-decoration-color: var(--maincolor);
     text-decoration-thickness: 3px;
 }
 
 a:visited {
-    color: #000000;
+    color: var(--fontcolor);
 }
 
 
@@ -137,8 +141,24 @@ blockquote {
     border-left: 3px solid var(--maincolor); 
     padding: 0.5em 10px;
 }
+
 main {
     max-width: 800px;
     margin: 0 auto;
     padding: 1em;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fontcolor: white;
+    --maincolor: #e3256b;
+  }
+
+  body {
+      background-color: black;
+  }
+
+  .avatar {
+      background-image: url('avatar_dark.png');
+  }
 }
