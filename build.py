@@ -45,7 +45,7 @@ def load_posts():
                 # Split YAML front matter and body content
                 front_matter, body = content.split('---\n', 2)[1:]
                 post_data = yaml.safe_load(front_matter)
-                post_content = markdown.markdown(body, extensions=["fenced_code"])
+                post_content = markdown.markdown(body, extensions=["footnotes", "fenced_code", "toc"])
                 slug = os.path.splitext(filename)[0]
                 post = Post(
                     title=post_data['title'],

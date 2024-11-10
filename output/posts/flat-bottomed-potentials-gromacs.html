@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>How to Use Flat-Bottomed Potentials in GROMACS</title>
     <link rel="stylesheet" href="/static/styles.css">
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
 </head>
 <body>
     <header>
@@ -22,7 +33,7 @@
 <p>They're also a little tricky to understand from a technical perspective.</p>
 <p>In this post, I'll briefly discuss the <a href="#the-maths">maths</a>, <a href="#implementation">how to implement</a> an FBP in the <a href="#topology-file">topology</a> and <a href="#restraints-file">restraints</a> files, and finish up with some <a href="#some-practical-notes">practical notes for usage</a>. </p>
 <hr />
-<h3>The Maths</h3>
+<h3 id="the-maths">The Maths</h3>
 <p>While this is a technical guide, let's have a quick look at the maths behind an FBP, which isn't <em>that</em> terrible, even for a humble biologist such as myself. As we can see from the GROMACS manual, the general equation is given as:
 $$
 V_{fb}(r_i) = \frac{1}{2}k_{fb}[d_g(r_{i};R_{i}) - r_{fb}]^2 H[d_g(r_{i};R_{i}) - r_{fb}]
@@ -37,7 +48,7 @@ with the most important parameters being:
 <p>Figure A shows a "positive" (non-inverted) FBP, which <strong>keeps a chosen atom within a certain shape</strong>, by applying a force of $k$ if the restrained particle strays outside of the radius $r_{fb}$.</p>
 <p>Figure B shows a "negative" (inverted) FBP, which instead <strong>keeps the particle away from the shape</strong>.</p>
 <hr />
-<h3>Implementation</h3>
+<h3 id="implementation">Implementation</h3>
 <p>Now, what makes FBPs in GROMACS rather annoying from a technical perspective is the need to split the definition across two files:
 1. a section in the <code>.itp</code> topology file <strong>defining the shape, radius, force constant</strong>, as well as the specific <strong>atoms to be restrained</strong>.
 2. a <code>restraints.gro</code> file which <strong>contains the x, y, and z coordinates</strong> of our FBP region for a given atom</p>
@@ -45,7 +56,7 @@ with the most important parameters being:
 <p><img alt="" src="https://github.com/MoMS-MMSB/lipid_sorting/blob/main/figures/Renders/POPC_POPE_r10_l10_pore/x_110_5deg_dof_notrj.gif?raw=true" />
 <center><i> A POPC/POPE membrane tubule with pores in the x- and y- dimensions </i></center></p>
 <hr />
-<h4>Topology File</h4>
+<h4 id="topology-file">Topology File</h4>
 <p>To make these pores, I wanted two cylindrical FBPs crossing the box, one in x, one in y. By defining a negative radius of -2.5nm, I'm keeping the restrained molecules out of the FBP geometries. And I wanted a strong force constant, k=5000 (where k=$KJ \cdot mol^{-1}\cdot nm^{-2}$). </p>
 <p>I define all of these in the <strong>itp file for the molecule I want to restrain</strong> (here, my coarse-grained phospholipid).</p>
 <pre><code>#ifdef POSRES_PL
@@ -90,7 +101,7 @@ with the most important parameters being:
 </ol>
 <p>This is a nice example, as we can see that we can define multiple FBPs on the same particle.</p>
 <hr />
-<h4>Restraints File</h4>
+<h4 id="restraints-file">Restraints File</h4>
 <p>However, you may notice that we haven't yet centered the FBP anywhere! This is where the <code>restraints.gro</code> file comes in.</p>
 <p>A snippet from my <code>restraints.gro</code> file looks like this:</p>
 <pre><code>Expect a large membrane in water
@@ -110,7 +121,7 @@ with the most important parameters being:
 <p>On my <a href="https://gist.github.com/jacksoncrowley/cdb4dffaefd14edd2a44f12b54e45b83">github</a> I have a script that will take care of this, which would generate a restraints file from your starting structure file, which would be run as:</p>
 <p><code>python gen_gromacs_restraints.py -c $INPUT_GRO -r POPC -r POPE -x 14.799 -y 14.799 -z 5</code></p>
 <hr />
-<h3>Some practical notes</h3>
+<h3 id="some-practical-notes">Some practical notes</h3>
 <ul>
 <li><strong>A given particle can have multiple FBPs placed upon it, but they all must come from the same set of coordinates</strong> as found in the <code>restraints.gro</code>. </li>
 <li><strong>A poorly placed flat-bottomed potential will probably cause your system to explode immediately</strong>. If a system suddenly has a force of 5000 kJ/mol/nm^2 applied to every molecule in a given region, don't expect it to respond kindly. </li>
