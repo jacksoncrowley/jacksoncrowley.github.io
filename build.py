@@ -13,7 +13,7 @@ post_template = env.get_template('post.html')
 # Copy static files
 def copy_static_files():
     static_dir = 'static'
-    output_static_dir = 'production/static'
+    output_static_dir = 'docs/static'
 
     # Create output static directory if it doesn't exist
     if not os.path.exists(output_static_dir):
@@ -60,7 +60,7 @@ def load_posts():
 
 # Generate index page
 def generate_index(posts):
-    output_path = 'production/index.html'
+    output_path = 'docs/index.html'
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     with open(output_path, 'w') as f:
         f.write(index_template.render(posts=posts))
@@ -68,7 +68,7 @@ def generate_index(posts):
 # Generate individual post pages
 def generate_posts(posts):
     for post in posts:
-        output_path = f'production/posts/{post.slug}.html'
+        output_path = f'docs/posts/{post.slug}.html'
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
         with open(output_path, 'w') as f:
             f.write(post_template.render(post=post))
@@ -78,7 +78,7 @@ def main():
     posts = load_posts()
     generate_index(posts)
     generate_posts(posts)
-    print("Site generated in 'production/' directory.")
+    print("Site generated in 'docs/' directory.")
 
 if __name__ == "__main__":
     main()
