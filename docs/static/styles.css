@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter');
 
 
 /* Global Styles */
@@ -11,7 +11,7 @@
 
 :root {
   --maincolor: #A4D8D8;
-  --mainfont: 'Nunito Sans';
+  --mainfont: 'Inter';
   --codefont: 'IBM Plex Mono';
   --fontcolor: black;
   --blockcolor: #f5f5f5;
@@ -33,6 +33,7 @@ header {
     padding: 20px 0;
     max-width: 800px;
     margin: auto;
+    padding: 1em;
     font-weight: 700;
 }
 
@@ -107,7 +108,7 @@ nav a {
 
 p {
   font-family: var(--bodyfont), sans-serif;
-  line-height: 1.5;
+  line-height: 2;
 }
 section {
   margin-bottom:20px;
