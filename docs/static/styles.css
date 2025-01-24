@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter');
+@import url('https://fonts.googleapis.com/css2?family=Lexend');
 
 
 /* Global Styles */
@@ -11,7 +11,7 @@
 
 :root {
   --maincolor: #A4D8D8;
-  --mainfont: 'Inter';
+  --mainfont: 'Lexend';
   --codefont: 'IBM Plex Mono';
   --fontcolor: black;
   --blockcolor: #f5f5f5;
@@ -118,7 +118,7 @@ section {
 pre {
     background-color: var(--blockcolor);
     padding: 1em;                /* Padding around the code */
-    border-radius: 20px;
+    /*border-radius: 20px;*/
     overflow-x: auto;            /* Horizontal scroll for long lines */
     overflow: hidden;
     font-size: 0.95em;           /* Slightly smaller font size */
@@ -128,7 +128,7 @@ pre {
 code {
     font-family: var(--codefont), monospace;
     background-color: var(--blockcolor);
-    border-radius: 3px;
+    /*border-radius: 3px;*/
     padding: 0.2em 0.4em;
     color: var(--codecolor);
 }
