@@ -10,7 +10,7 @@
 }
 
 :root {
-  --maincolor: #A4D8D8;
+  --maincolor: #0d75ff;
   --mainfont: 'Figtree';
   --codefont: 'IBM Plex Mono';
   --fontcolor: black;
@@ -156,4 +156,9 @@ main {
 
 .posts-preview time {
     font-size: 0.9em;
+}
+
+nav a:hover,
+nav a[data-current-page="true"] {
+    color: var(--maincolor);
 }
