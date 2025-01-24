@@ -9,11 +9,8 @@
 <body>
     <header>
       <div class="header-content">
-        <!--<div class="avatar">
-        </div> -->
         <div class="header-text">
           <h1>JACKSON CROWLEY</h1>
-          <!--          <p class="subtitle">Computational Biologist</p> -->
             <nav>
               <a href="https://drive.google.com/file/d/1yASb15IHVH_a3FozN1d57cFaOLOMZgYU/view?pli=1">CV</a>
               <a href="https://github.com/jacksoncrowley">GitHub</a>
@@ -23,26 +20,19 @@
     </header>
     <main>
       <section id="about">
-        <p>PhD Student, Computational Biophysics.</p>
+        <p><code>2022 - PRES</code> PhD, Computational Biophysics, CNRS/Univ. Lyon. 1, France</p>
+        <p><code>2020 - 2021</code> MPhilSc, Biomedical Engineering (Honours), UTS, Australia</p>
       </section>
       <section id="posts">
           <h2>Posts</h2>
           {% for post in posts %}
-          <article>
+          <article class="posts-preview">
               <h4><a href="/posts/{{ post.slug }}.html">{{ post.title }}</a></h3>
-              <time datetime="{{ post.date }}">{{ post.date }}</time>
+              <time datetime="{{ post.date }}"><code>{{ post.date }}</code></time>
           </article>
           {% endfor %}
       </section>
-      <!-- <section id="projects">
-          <h2>Projects</h2>
-          <h4><a href="http://smoptimizer.jacksoncrowley.xyz">SMOptimizer</a></h4>
-          <p>Generate 3D structures from SMILES strings using openbabel, running on a Google Cloud VM.</p>
-          <h4><a href="https://github.com/jacksoncrowley/anki-lang">Anki-Lang</a></h4>
-          <p>Assisted flash card generation for language learning with text to speech and IPA generation. Built in python with the uv package manager.</p>
-      </section> -->
     </main>
-
     <!--<footer>
         <p>&copy; 2025 Jackson Crowley</p>
     </footer>-->
