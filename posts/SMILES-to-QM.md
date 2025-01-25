@@ -2,12 +2,9 @@
 ---
 title: 'My first QM: From SMILES string to dihedral scan'
 date: "2024-08-01"
-tags: ["qm", "psi4"]
 ---
 
 This post goes over my first attempt at starting with nothing but a SMILES string, converting that into a molecule file with optimised geometry, and performing some basic QM calculations in Psi4 to do a dihedral scan. There are also a few notes on quantum chemistry, but be warned: having never formally studied the stuff, I may have made some extremely embarassing errors (and am very open to being corrected). 
-
-# my first quantum chemistry calculations I: from SMILES string to dihedral scan
 
 When making coarse-grained (CG) parameters for molecular dynamics (MD) simulations, we need reference data from atomistic simulations in order to validate that we're not doing anything completely nonsensical.
 
@@ -15,7 +12,7 @@ My dilemma, however, is that I want to make CG parameters for a molecule that do
 
 No easy way around it: to parameterise my missing dihedral, I'm going to have to do the quantum mechanical calculations myself.
 
-## attempting to understand the basics of *ab initio* computational chemistry
+### attempting to understand the basics of *ab initio* computational chemistry
 
 In MD simulations, we're using classical mechanics, and considering an atom as a single entity... which obviously, it isn't.
 
@@ -43,14 +40,12 @@ We call the combination of method and basis set the **level of theory**, which d
 >
 > **MP2/CC-PVDZ**
 
-Remember, kids, everything is a model. And you know [what they say about models](https://en.wikipedia.org/wiki/All_models_are_wrong).
 
-
-## setting up
+### setting up
 Of course, we need a software package to take care of this for us. I've opted to go with [Psi4](https://psicode.org/), a pretty-widely used open-source package that runs using python, built atop C++. I'm comfortable enough with python, and more importantly, I *really* didn't want to have to learn piece of software, and Psi4 looked legit and easy enough to make work. I set up a new conda environment and got started.
 
 
-## getting a starting structure from a SMILES string
+### getting a starting structure from a SMILES string
 The dihedral I want to parameterise comes from cholesteryl oleate, an awfully large molecule (by QM standards, maybe). I decided instead to take a small portion which has the dihedral I want, a [cyclohexyl acetate](https://pubchem.ncbi.nlm.nih.gov/compound/Cyclohexyl-acetate):
 
 I can take the SMILES string and generate a 3d structure using ```openbabel```[^2]:
@@ -91,7 +86,7 @@ H          4.67278        1.79802        2.59618
 
 It's an extremely simple format: the first line shows us we have 24 atoms, the second line is blank, but you can write a descriptor "i.e. Cyclohexyl acetate"[^4], and the rest of the lines are organised to show the atom type and it's x, y, z cartesian coordinates. 
 
-## optimising the geometry
+### optimising the geometry
 Using the ```obminimize``` function of ```openbabel```, we can perform a basic energy minimisation of our molecule.
 
 ```obminimize CHA.xyz > CHA.2.xyz```
@@ -148,10 +143,9 @@ molecule.save_xyz_file("CHA.3.xyz",1)
 ```scf_type df```, by the way, refers to the **Self-Consistent Field** procedure, which is the iterative process of solving the Schrödinger equation repeatedly to update the coefficients describing our orbitals, which we repeat until they converge. **Density Fitting** (DF)-SCF is a way of speeding up the procedure by introducing more approximations, although apparently the loss of accuracy is quite minimal.
 
 
-
 Running on 4 cores with ```psi4 psi4_optimise.dat -n 4```, it finishes in about 3 minutes.
 
-## the dihedral scan
+### the dihedral scan
 When doing a dihedral scan, what we're doing is fixing this dihedral at a given value, optimising the geometry to calculate the potential energy on the system, rotating the dihedral by a small amount, and repeating. We then return the potential energy vs. dihedral angle at the end, to plot the potential energy landscape (is this a correct term?) of the dihedral.
 
 I know from looking at the structure that the dihedral I'm after is D(2,4,5,10), where the numbers are the atom indices in our input structure. When I look in the output file, ```psi4_optimise.out```, I can look for the value of this dihedral angle in the final optimisation step, and I see:
