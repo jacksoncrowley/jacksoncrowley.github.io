@@ -105,8 +105,9 @@ pre {
 code {
     font-family: var(--codefont), monospace;
     background-color: var(--blockcolor);
-    padding: 0.2em 0.4em;
     color: var(--codecolor);
+    font-size: 0.95em;           /* Slightly smaller font size */
+    padding: 0.05em;
 }
 
 pre code {
