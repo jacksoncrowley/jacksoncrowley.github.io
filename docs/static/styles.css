@@ -10,20 +10,27 @@
 }
 
 :root {
-  --maincolor: #0d75ff;
+  /* typography */
   --mainfont: 'Figtree';
   --codefont: 'IBM Plex Mono';
-  --fontcolor: black;
+
+  /* colors */
+  --maincolor: #0d75ff;
   --blockcolor: #f2f4f8;
+  --fontcolor: black;
   --bordercolor: #dde1e6;
   --codecolor: black;
   --footercolor: #878d96;
+  --backgroundcolor: #fbfbfb;
+
+  /* variables */
+  --pagewidth: 800px;
 }
 
 /* Body and Background */
 body {
-    font-family: var(--mainfont), monospace;
-    background-color: #fbfbfb;
+    font-family: var(--mainfont);
+    background-color: var(--backgroundcolor);
     color: var(--fontcolor);
     padding: 20px;
     text-align: left;
@@ -33,7 +40,7 @@ body {
 header {
     color: var(--fontcolor);
     padding: 20px 0;
-    max-width: 800px;
+    max-width: var(--pagewidth);
     margin: auto;
     font-weight: 700;
 }
@@ -57,7 +64,7 @@ h1 {
 
 /* Navigation Bar */
 nav {
-    max-width: 800px;
+    max-width: var(--pagewidth);
     width: 100%;
     margin-top: 5px;
 }
@@ -98,8 +105,7 @@ section {
 pre {
     background-color: var(--blockcolor);
     padding: 1em;                /* Padding around the code */
-    overflow-x: auto;            /* Horizontal scroll for long lines */
-    overflow: hidden;
+    overflow: auto hidden;
     font-size: 0.90em;           /* Slightly smaller font size */
     margin: 1em 0;               /* Space around the code block */
     border: 1px solid var(--bordercolor);
@@ -129,8 +135,9 @@ blockquote {
     padding: 0.5em 10px;
 }
 
+/* main body */
 main {
-    max-width: 800px;
+    max-width: var(--pagewidth);
     margin: 0 auto;
 }
 
@@ -160,6 +167,7 @@ nav a[data-current-page="true"] {
     color: var(--maincolor);
 }
 
+/* footer */
 footer {
     max-width: 800px;
     margin: 40px auto;
