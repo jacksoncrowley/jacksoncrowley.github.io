@@ -3,35 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ post.title }}</title>
+    <title>Jackson Crowley</title>
     <link rel="stylesheet" href="/static/styles.css">
-    <script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-</script>
-    <script type="text/javascript" async
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
-    </script>
 </head>
 <body>
     <header>
-	<h1>JACKSON CROWLEY</h1>
-        <nav>
-            <a href="/">Home</a>
-	    <a href="/technical.html">Technical</a>
-        </nav>
+      <div class="header-content">
+        <div class="header-text">
+          <h1>JACKSON CROWLEY</h1>
+            <nav>
+	      <a href="/">Home</a>
+              <a href="/technical.html" data-current-page="true">Technical</a>
+            </nav>
+        </div>
+      </div>
     </header>
-
     <main>
-        <article>
-            <h1>{{ post.title }}</h1>
-            <time datetime="{{ post.date }}"><code>{{ post.date }}</code></time>
-            <p>{{ post.content | safe }}</p>
-        </article>
+      <section id="posts">
+          <article class="posts-preview">
+              <time datetime="2024-08-01"><code>2024-08-01</code></time>
+              <h4><a href="/posts/SMILES-to-QM.html">My first QM: From SMILES string to dihedral scan</a></h3>
+          </article>
+          
+          <article class="posts-preview">
+              <time datetime="2024-07-23"><code>2024-07-23</code></time>
+              <h4><a href="/posts/flat-bottomed-potentials-gromacs.html">How to Use Flat-Bottomed Potentials in GROMACS</a></h3>
+          </article>
+          
+      </section>
     </main>
     <footer>
         <p>&copy; 2025 Jackson Crowley</p>
@@ -50,4 +49,3 @@
     </footer>
 </body>
 </html>
-
