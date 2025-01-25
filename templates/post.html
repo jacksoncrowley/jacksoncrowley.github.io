@@ -29,9 +29,8 @@
     <main>
         <article>
             <h1>{{ post.title }}</h1>
-            <time datetime="{{ post.date }}">{{ post.date }}</time>
+            <time datetime="{{ post.date }}"><code>{{ post.date }}</code></time>
             <p>{{ post.content | safe }}</p>
-            <p>Tags: {% for tag in post.tags %}<a href="/tags/{{ tag }}.html">{{ tag }}</a> {% endfor %}</p>
         </article>
     </main>
     <footer>

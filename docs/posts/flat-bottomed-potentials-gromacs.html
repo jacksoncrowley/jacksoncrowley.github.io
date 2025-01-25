@@ -29,7 +29,7 @@
     <main>
         <article>
             <h1>How to Use Flat-Bottomed Potentials in GROMACS</h1>
-            <time datetime="2024-07-23">2024-07-23</time>
+            <time datetime="2024-07-23"><code>2024-07-23</code></time>
             <p><p>Flat bottomed potentials (FBPs) are a unique (and powerful) type of restraint we can apply to specific particles in a molecular dynamics simulation. </p>
 <p>In short, we define <strong>a fixed geometric region within the simulation box to which certain atoms will either be attracted or repelled</strong>.</p>
 <p>They're also a little tricky to understand from a technical perspective.</p>
@@ -131,7 +131,6 @@ with the most important parameters being:
 <li>You can check the <code>.log</code> file to make sure your FBP is actually running; there should be an entry <code>Flat-b. P-R.</code>. If it shows a 0.00000, this means that no particles are currently being affected by the FBPs.</li>
 <li><strong>If an FBP has been defined in the topology, it will not run without a restraints.gro</strong> file, which is flagged at the <code>gmx grompp</code> step with <code>-r</code>. If you're not sure if you've got it working properly, try <code>grompp</code>-ing without <code>-r</code>.</li>
 </ul></p>
-            <p>Tags: <a href="/tags/gromacs.html">gromacs</a> <a href="/tags/md.html">md</a> </p>
         </article>
     </main>
     <footer>

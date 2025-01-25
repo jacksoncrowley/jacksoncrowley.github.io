@@ -2,7 +2,6 @@
 ---
 title: "How to Use Flat-Bottomed Potentials in GROMACS"
 date: "2024-07-23"
-tags: ["gromacs", "md"]
 ---
 
 Flat bottomed potentials (FBPs) are a unique (and powerful) type of restraint we can apply to specific particles in a molecular dynamics simulation. 
