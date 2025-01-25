@@ -8,6 +8,7 @@ from datetime import datetime
 # Load templates
 env = Environment(loader=FileSystemLoader('templates'))
 index_template = env.get_template('index.html')
+blog_template = env.get_template('blog.html')
 post_template = env.get_template('post.html')
 
 # Copy static files
@@ -59,11 +60,19 @@ def load_posts():
     return posts
 
 # Generate index page
-def generate_index(posts):
+def generate_index():
     output_path = 'docs/index.html'
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     with open(output_path, 'w') as f:
-        f.write(index_template.render(posts=posts))
+        f.write(index_template.render())
+
+# Generate blog page
+def generate_blog(posts):
+    output_path = 'docs/blog.html'
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    with open(output_path, 'w') as f:
+        f.write(blog_template.render(posts=posts))
+
 
 # Generate individual post pages
 def generate_posts(posts):
@@ -76,7 +85,8 @@ def generate_posts(posts):
 def main():
     copy_static_files()
     posts = load_posts()
-    generate_index(posts)
+    generate_index()
+    generate_blog(posts)
     generate_posts(posts)
     print("Site generated in 'docs/' directory.")
 

@@ -14,8 +14,9 @@
   --mainfont: 'Figtree';
   --codefont: 'IBM Plex Mono';
   --fontcolor: black;
-  --blockcolor: #f5f5f5;
+  --blockcolor: #dde1e6;
   --codecolor: black;
+  --footercolor: #878d96;
 }
 
 /* Body and Background */
@@ -50,7 +51,7 @@ header {
 h1 {
     font-size: 2rem;
     margin: 0;
-    font-weight: bold;
+    font-weight: 700;
 }
 
 /* Navigation Bar */
@@ -65,6 +66,7 @@ a {
     text-decoration: underline;
     text-decoration-color: var(--maincolor);
     text-decoration-thickness: 2px;
+    transition: 0.2s;
 }
 
 a:visited {
@@ -148,3 +150,30 @@ nav a:hover,
 nav a[data-current-page="true"] {
     color: var(--maincolor);
 }
+
+footer {
+    max-width: 800px;
+    margin: 40px auto;
+    display: flex;
+    color: var(--footercolor);
+    justify-content: space-between;
+    align-items: left;
+}
+
+.social-icons {
+    display: flex;
+    gap: 12px;
+}
+
+.github-icon, .linkedin-icon {
+    height: 24px;
+    width: 24px;
+    fill: var(--footercolor);
+    transition: fill 0.2s;
+}
+
+footer a:hover .github-icon,
+footer a:hover .linkedin-icon {
+   fill: var(--maincolor);
+}
+
