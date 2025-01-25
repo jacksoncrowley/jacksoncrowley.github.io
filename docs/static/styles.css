@@ -14,7 +14,8 @@
   --mainfont: 'Figtree';
   --codefont: 'IBM Plex Mono';
   --fontcolor: black;
-  --blockcolor: #dde1e6;
+  --blockcolor: #f2f4f8;
+  --bordercolor: #dde1e6;
   --codecolor: black;
   --footercolor: #878d96;
 }
@@ -98,26 +99,32 @@ pre {
     padding: 1em;                /* Padding around the code */
     overflow-x: auto;            /* Horizontal scroll for long lines */
     overflow: hidden;
-    font-size: 0.95em;           /* Slightly smaller font size */
+    font-size: 0.90em;           /* Slightly smaller font size */
     margin: 1em 0;               /* Space around the code block */
+    border: 1px solid var(--bordercolor);
 }
 
 code {
     font-family: var(--codefont), monospace;
     background-color: var(--blockcolor);
     color: var(--codecolor);
-    font-size: 0.95em;           /* Slightly smaller font size */
-    padding: 0.05em;
+    font-size: 0.90em;           /* Slightly smaller font size */
+    padding: 0.10em;
+    border: 1px solid var(--bordercolor);
 }
 
 pre code {
     color: var(--codecolor);
+    border: none; /* remove border from code inside pre */
 }
 
 blockquote {
     color: var(--codecolor);
     background: var(--blockcolor);
     border-left: 3px solid var(--maincolor); 
+    border-top: 1px solid var(--bordercolor);
+    border-right: 1px solid var(--bordercolor);
+    border-bottom: 1px solid var(--bordercolor);
     padding: 0.5em 10px;
 }
 
