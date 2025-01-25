@@ -21,15 +21,15 @@
     </header>
     <main>
       <section id="about">
-        <p><code>2022 - PRES</code> PhD, Computational Biophysics, CNRS/Univ. Lyon. 1, France</p>
-        <p><code>2020 - 2021</code> MPhilSc, Biomedical Engineering (Honours), UTS, Australia</p>
+        <p><code>2022-PRES:</code> PhD, Computational Biophysics, CNRS/Univ. Lyon. 1, France</p>
+        <p><code>2020-2021:</code> MPhilSc, Biomedical Engineering (Honours), UTS, Australia</p>
       </section>
       <section id="posts">
-          <h2>Posts</h2>
+          <h3>Posts</h3>
           {% for post in posts %}
           <article class="posts-preview">
-              <h4><a href="/posts/{{ post.slug }}.html">{{ post.title }}</a></h3>
               <time datetime="{{ post.date }}"><code>{{ post.date }}</code></time>
+              <h4><a href="/posts/{{ post.slug }}.html">{{ post.title }}</a></h3>
           </article>
           {% endfor %}
       </section>
