@@ -62,32 +62,33 @@ nav {
     margin-top: 5px;
 }
 
+nav a {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* links */
 a {
     color: var(--fontcolor);
     text-decoration: underline;
     text-decoration-color: var(--maincolor);
     text-decoration-thickness: 2px;
     transition: 0.2s;
-}
+} 
 
 a:visited {
     color: var(--fontcolor);
 }
 
-
 a:hover {
     color: var(--maincolor);
-}
-
-nav a {
-    font-size: 1.2rem;
-    font-weight: bold;
 }
 
 p {
   font-family: var(--bodyfont), sans-serif;
   line-height: 2;
 }
+
 section {
   margin-bottom:20px;
 }
