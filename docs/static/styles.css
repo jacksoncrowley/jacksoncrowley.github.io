@@ -18,6 +18,7 @@
   --bordercolor: #dde1e6;
   --codecolor: black;
   --footercolor: #878d96;
+  --maxwidth: 800px;
 }
 
 /* Body and Background */
@@ -27,15 +28,26 @@ body {
     color: var(--fontcolor);
     padding: 20px;
     text-align: left;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 1em;
 }
 
 /* Header Styles */
 header {
     color: var(--fontcolor);
     padding: 20px 0;
-    max-width: 800px;
+    max-width: var(--maxwidth);
     margin: auto;
     font-weight: 700;
+    width: 100%
 }
 
 .header-content {
@@ -57,7 +69,7 @@ h1 {
 
 /* Navigation Bar */
 nav {
-    max-width: 800px;
+    max-width: var(--maxwidth);
     width: 100%;
     margin-top: 5px;
 }
@@ -130,8 +142,10 @@ blockquote {
 }
 
 main {
-    max-width: 800px;
+    max-width: var(--maxwidth);
     margin: 0 auto;
+    width: 100%;
+    flex: 1;
 }
 
 .posts-preview {
@@ -161,8 +175,9 @@ nav a[data-current-page="true"] {
 }
 
 footer {
-    max-width: 800px;
+    max-width: var(--maxwidth);
     margin: 40px auto;
+    width: 100%;
     display: flex;
     color: var(--footercolor);
     justify-content: space-between;
