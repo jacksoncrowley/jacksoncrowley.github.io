@@ -54,7 +54,6 @@ h1 {
     font-family: var(--headerfont);
     font-size: 2rem;
     font-weight: 700;
-    font-feature-settings: "case" 0;
 }
 
 p {
@@ -173,13 +172,26 @@ blockquote {
     border: 1px solid var(--bordercolor);
     border-left: 3px solid var(--maincolor);
     padding: 0.5em 10px;
+    margin-bottom: 1.0em;
 }
 
 /* blog post */
-.technical-post p {
-    margin-bottom: 1.5em;
+.technical-post time {
+    margin-top: 1.0em;
 }
 
+.technical-post p {
+    margin-bottom: 1.0em;
+}
+
+.technical-post h1 {
+    margin-bottom: 0.5em; /* gives nice spacing for dates in posts */
+}
+
+.technical-post hr {
+    border: 1px dashed var(--maincolor);
+    margin-bottom: 1.0em;
+}
 
 
 /* Footer */
