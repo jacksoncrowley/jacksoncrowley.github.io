@@ -124,7 +124,7 @@ section {
 /* Posts Preview Styles */
 .posts-preview {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     line-height: 2;
 }
 
