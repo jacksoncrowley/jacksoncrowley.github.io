@@ -175,6 +175,13 @@ blockquote {
     padding: 0.5em 10px;
 }
 
+/* blog post */
+.technical-post p {
+    margin-bottom: 1.5em;
+}
+
+
+
 /* Footer */
 footer {
     max-width: var(--maxwidth);
