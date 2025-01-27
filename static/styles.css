@@ -1,10 +1,12 @@
 /* Imports */
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Figtree');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Figtree&display=swap');
 
 /* CSS Variables */
 :root {
-  --maincolor: #0d75ff;
+  --maincolor: #5c8a73;
+  --headerfont: 'Space Grotesk';
   --mainfont: 'Figtree';
   --codefont: 'IBM Plex Mono';
   --fontcolor: black;
@@ -49,8 +51,10 @@ main {
 
 /* Typography */
 h1 {
+    font-family: var(--headerfont);
     font-size: 2rem;
     font-weight: 700;
+    font-feature-settings: "case" 0;
 }
 
 p {
