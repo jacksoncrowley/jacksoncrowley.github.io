@@ -3,7 +3,7 @@ title: 'Going from a SMILES string to QM dihedral scan'
 date: "2024-08-01"
 ---
 
-In this post, we begin with nothing but a SMILES string, convert that into a molecule file with optimised geometry, and finally perform a simple dihedral scan at the quantum chemical level. 
+In this post, we'll take a SMILES string, convert that into a molecule file with optimised geometry, and finally perform a simple dihedral scan at the quantum chemical level. 
 
 We'll start with a few of my basic notes on quantum chemistry, but feel free to skip that and jump right into the how-to by clicking [here](#getting-started).
 

@@ -4,7 +4,7 @@ title: "How to Use Flat-Bottomed Potentials in GROMACS"
 date: "2024-07-23"
 ---
 
-Flat bottomed potentials (FBPs) are a unique (and powerful) type of restraint we can apply to specific particles in a molecular dynamics simulation. 
+Flat bottomed potentials (FBPs) are a unique type of restraint we can apply to specific particles in a molecular dynamics simulation. 
 
 In short, we define **a fixed geometric region within the simulation box to which certain atoms will either be attracted or repelled**.
 
@@ -18,6 +18,7 @@ $$
 V_{fb}(r_i) = \frac{1}{2}k_{fb}[d_g(r_{i};R_{i}) - r_{fb}]^2 H[d_g(r_{i};R_{i}) - r_{fb}]
 $$
 with the most important parameters being:
+
 - $d_g(r_{i};R_{I})$, the geometry of the shape we wish to define (FBPs can be spheres, cylinders, or layers, see the [GROMACS manual](https://manual.gromacs.org/2024.2/reference-manual/functions/restraints.html#flat-bottomed-position-restraints) for more info on the shapes).
 - $r$, the radius of our shape. **A negative radius keeps atoms outside of our FBP region, a positive radius keeps them within**.
 - $k$, the force constant applied to the chosen atoms when they are not **inside or outside** of our chosen shape.
@@ -70,6 +71,7 @@ I define all of these in the **itp file for the molecule I want to restrain** (h
        12      2      7  -2.5   5000
 #endif
 ```
+Where the columns correspond to:
 
 1.  The atom number within the molecule I'm restraining. 
 

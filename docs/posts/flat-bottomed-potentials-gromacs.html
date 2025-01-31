@@ -39,11 +39,13 @@
 $$
 V_{fb}(r_i) = \frac{1}{2}k_{fb}[d_g(r_{i};R_{i}) - r_{fb}]^2 H[d_g(r_{i};R_{i}) - r_{fb}]
 $$
-with the most important parameters being:
-- $d_g(r_{i};R_{I})$, the geometry of the shape we wish to define (FBPs can be spheres, cylinders, or layers, see the <a href="https://manual.gromacs.org/2024.2/reference-manual/functions/restraints.html#flat-bottomed-position-restraints">GROMACS manual</a> for more info on the shapes).
-- $r$, the radius of our shape. <strong>A negative radius keeps atoms outside of our FBP region, a positive radius keeps them within</strong>.
-- $k$, the force constant applied to the chosen atoms when they are not <strong>inside or outside</strong> of our chosen shape.
-- $H$, the Heaviside step function which "turns on" the force constant once a restrained atom leaves the FBP region.</p>
+with the most important parameters being:</p>
+<ul>
+<li>$d_g(r_{i};R_{I})$, the geometry of the shape we wish to define (FBPs can be spheres, cylinders, or layers, see the <a href="https://manual.gromacs.org/2024.2/reference-manual/functions/restraints.html#flat-bottomed-position-restraints">GROMACS manual</a> for more info on the shapes).</li>
+<li>$r$, the radius of our shape. <strong>A negative radius keeps atoms outside of our FBP region, a positive radius keeps them within</strong>.</li>
+<li>$k$, the force constant applied to the chosen atoms when they are not <strong>inside or outside</strong> of our chosen shape.</li>
+<li>$H$, the Heaviside step function which "turns on" the force constant once a restrained atom leaves the FBP region.</li>
+</ul>
 <p>Now, let's have a look at an image from the GROMACS manual:</p>
 <p><img alt="" src="https://manual.gromacs.org/2024.2/_images/fbposres.png" /></p>
 <p>Figure A shows a "positive" (non-inverted) FBP, which <strong>keeps a chosen atom within a certain shape</strong>, by applying a force of $k$ if the restrained particle strays outside of the radius $r_{fb}$.</p>
