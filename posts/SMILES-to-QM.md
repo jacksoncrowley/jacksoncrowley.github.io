@@ -1,16 +1,11 @@
-
 ---
-title: 'My first QM: From SMILES string to dihedral scan'
+title: 'Going from a SMILES string to QM dihedral scan'
 date: "2024-08-01"
 ---
 
-This post goes over my first attempt at starting with nothing but a SMILES string, converting that into a molecule file with optimised geometry, and performing some basic QM calculations in Psi4 to do a dihedral scan. There are also a few notes on quantum chemistry, but be warned: having never formally studied the stuff, I may have made some extremely embarassing errors (and am very open to being corrected). 
+In this post, we begin with nothing but a SMILES string, convert that into a molecule file with optimised geometry, and finally perform a simple dihedral scan at the quantum chemical level. 
 
-When making coarse-grained (CG) parameters for molecular dynamics (MD) simulations, we need reference data from atomistic simulations in order to validate that we're not doing anything completely nonsensical.
-
-My dilemma, however, is that I want to make CG parameters for a molecule that doesn't have complete atomistic parameters. I stick two pre-existing combinations of molecules together, add bonds, angles, and dihedrals, and then I find out that one dihedral is missing. 
-
-No easy way around it: to parameterise my missing dihedral, I'm going to have to do the quantum mechanical calculations myself.
+We'll start with a few of my basic notes on quantum chemistry, but feel free to skip that and jump right into the how-to by clicking [here](#getting-started).
 
 ### attempting to understand the basics of *ab initio* computational chemistry
 
@@ -41,11 +36,9 @@ We call the combination of method and basis set the **level of theory**, which d
 > **MP2/CC-PVDZ**
 
 
-### setting up
-Of course, we need a software package to take care of this for us. I've opted to go with [Psi4](https://psicode.org/), a pretty-widely used open-source package that runs using python, built atop C++. I'm comfortable enough with python, and more importantly, I *really* didn't want to have to learn piece of software, and Psi4 looked legit and easy enough to make work. I set up a new conda environment and got started.
+## Getting Started
 
-
-### getting a starting structure from a SMILES string
+### Step 1: Converting a SMILES string to a 3d structure
 The dihedral I want to parameterise comes from cholesteryl oleate, an awfully large molecule (by QM standards, maybe). I decided instead to take a small portion which has the dihedral I want, a [cyclohexyl acetate](https://pubchem.ncbi.nlm.nih.gov/compound/Cyclohexyl-acetate):
 
 I can take the SMILES string and generate a 3d structure using ```openbabel```[^2]:
@@ -86,12 +79,17 @@ H          4.67278        1.79802        2.59618
 
 It's an extremely simple format: the first line shows us we have 24 atoms, the second line is blank, but you can write a descriptor "i.e. Cyclohexyl acetate"[^4], and the rest of the lines are organised to show the atom type and it's x, y, z cartesian coordinates. 
 
-### optimising the geometry
-Using the ```obminimize``` function of ```openbabel```, we can perform a basic energy minimisation of our molecule.
+## Step 2: Simple Geometry Optimisation
+The 3d structure we have is geometrically perfect. Yet molecules are not. We'll need to perform some basic energy minimisaion to return something more realistic to save us ttime when we start running simulations at the quantum level. 
+
+We can do this by using the ```obminimize``` function of ```openbabel```:
 
 ```obminimize CHA.xyz > CHA.2.xyz```
 
-But we really should optimise our starting geometry as much as possible, and so we can use our QM engine to optimise the geometry further in accordance with the level of theory we've chosen. Since I want to generate atomistic parameters for the CHARMM36 MD forcefield, and previous similar parameterisation efforts have used the MP2/CC-PVDZ level of theory, I think it's where I'll start.
+## Step 3: Quantum Geometry Optimisation
+We really should optimise our starting geometry as much as possible, and so we can use our QM engine to optimise the geometry further in accordance with the level of theory we've chosen. Since I want to generate atomistic parameters for the CHARMM36 MD forcefield, and previous similar parameterisation efforts have used the MP2/CC-PVDZ level of theory, I think it's where I'll start.
+
+We're going to be using the program [psi4](https://psicode.org) to run all of our QM calculations. I found it pretty easy to use considering it was my first time. Other common alternatives are [ORCA](https://www.faccts.de/orca/) and [Gaussian](https://gaussian.com), the latter of which is paid.
 
 Psi4 has a jupyter/python API, but it also takes an input file written in ```psithon```; basically python with some extra, psi4-specific stuff.
 
@@ -145,8 +143,8 @@ molecule.save_xyz_file("CHA.3.xyz",1)
 
 Running on 4 cores with ```psi4 psi4_optimise.dat -n 4```, it finishes in about 3 minutes.
 
-### the dihedral scan
-When doing a dihedral scan, what we're doing is fixing this dihedral at a given value, optimising the geometry to calculate the potential energy on the system, rotating the dihedral by a small amount, and repeating. We then return the potential energy vs. dihedral angle at the end, to plot the potential energy landscape (is this a correct term?) of the dihedral.
+### Step 4: Dihedral Scan
+When doing a dihedral scan, what we're doing is fixing this dihedral at a given value, optimising the geometry to calculate the potential energy on the system, rotating the dihedral by a small amount, and repeating. We then return the potential energy vs. dihedral angle at the end, to plot the potential energy vs angle of the dihedral.
 
 I know from looking at the structure that the dihedral I'm after is D(2,4,5,10), where the numbers are the atom indices in our input structure. When I look in the output file, ```psi4_optimise.out```, I can look for the value of this dihedral angle in the final optimisation step, and I see:
 
@@ -188,7 +186,7 @@ for psi in dih_range:
     molecule.save_xyz_file(out,1)
 ```
 
-And voila - provided I haven't done anything horribly wrong, we have successfully done our dihedral scan!
+Which will result in a 2D array containing the angle(psi) and its corresponding energy.
 
 [^1]: this is the time-independent form of the equation; there's also a time-dependent form, given as:
 $\left[ -\frac{\hbar^2}{2m} \nabla^2 + V(\mathbf{r}) \right] \Psi(\mathbf{r}) = E \Psi(\mathbf{r})$

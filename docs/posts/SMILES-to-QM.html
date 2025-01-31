@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My first QM: From SMILES string to dihedral scan</title>
+    <title>Going from a SMILES string to QM dihedral scan</title>
     <link rel="stylesheet" href="/static/styles.css">
     <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
@@ -28,12 +28,10 @@
 
     <main>
         <article class="technical-post">
-            <h1>My first QM: From SMILES string to dihedral scan</h1>
+            <h1>Going from a SMILES string to QM dihedral scan</h1>
             <time datetime="2024-08-01"><code>2024-08-01</code></time>
-            <p><p>This post goes over my first attempt at starting with nothing but a SMILES string, converting that into a molecule file with optimised geometry, and performing some basic QM calculations in Psi4 to do a dihedral scan. There are also a few notes on quantum chemistry, but be warned: having never formally studied the stuff, I may have made some extremely embarassing errors (and am very open to being corrected). </p>
-<p>When making coarse-grained (CG) parameters for molecular dynamics (MD) simulations, we need reference data from atomistic simulations in order to validate that we're not doing anything completely nonsensical.</p>
-<p>My dilemma, however, is that I want to make CG parameters for a molecule that doesn't have complete atomistic parameters. I stick two pre-existing combinations of molecules together, add bonds, angles, and dihedrals, and then I find out that one dihedral is missing. </p>
-<p>No easy way around it: to parameterise my missing dihedral, I'm going to have to do the quantum mechanical calculations myself.</p>
+            <p><p>In this post, we begin with nothing but a SMILES string, convert that into a molecule file with optimised geometry, and finally perform a simple dihedral scan at the quantum chemical level. </p>
+<p>We'll start with a few of my basic notes on quantum chemistry, but feel free to skip that and jump right into the how-to by clicking <a href="#getting-started">here</a>.</p>
 <h3 id="attempting-to-understand-the-basics-of-ab-initio-computational-chemistry">attempting to understand the basics of <em>ab initio</em> computational chemistry</h3>
 <p>In MD simulations, we're using classical mechanics, and considering an atom as a single entity... which obviously, it isn't.</p>
 <p>When we do <em>ab initio</em> QM, we really start from nothing, and use theory alone to calculate molecular properties. This is done by solving the Schrödinger Equation<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>:</p>
@@ -51,9 +49,8 @@ $</p>
 <p><strong>HF/6-31G</strong>*</p>
 <p><strong>MP2/CC-PVDZ</strong></p>
 </blockquote>
-<h3 id="setting-up">setting up</h3>
-<p>Of course, we need a software package to take care of this for us. I've opted to go with <a href="https://psicode.org/">Psi4</a>, a pretty-widely used open-source package that runs using python, built atop C++. I'm comfortable enough with python, and more importantly, I <em>really</em> didn't want to have to learn piece of software, and Psi4 looked legit and easy enough to make work. I set up a new conda environment and got started.</p>
-<h3 id="getting-a-starting-structure-from-a-smiles-string">getting a starting structure from a SMILES string</h3>
+<h2 id="getting-started">Getting Started</h2>
+<h3 id="step-1-converting-a-smiles-string-to-a-3d-structure">Step 1: Converting a SMILES string to a 3d structure</h3>
 <p>The dihedral I want to parameterise comes from cholesteryl oleate, an awfully large molecule (by QM standards, maybe). I decided instead to take a small portion which has the dihedral I want, a <a href="https://pubchem.ncbi.nlm.nih.gov/compound/Cyclohexyl-acetate">cyclohexyl acetate</a>:</p>
 <p>I can take the SMILES string and generate a 3d structure using <code>openbabel</code><sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>:</p>
 <pre><code>openbabel -:&quot;CC(=O)OC1CCCCC1&quot; -oxyz -O CHA.xyz --gen3d # generating an .xyz file
@@ -87,10 +84,13 @@ H          4.74681        2.94859        1.28212
 H          4.67278        1.79802        2.59618
 </code></pre>
 <p>It's an extremely simple format: the first line shows us we have 24 atoms, the second line is blank, but you can write a descriptor "i.e. Cyclohexyl acetate"<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>, and the rest of the lines are organised to show the atom type and it's x, y, z cartesian coordinates. </p>
-<h3 id="optimising-the-geometry">optimising the geometry</h3>
-<p>Using the <code>obminimize</code> function of <code>openbabel</code>, we can perform a basic energy minimisation of our molecule.</p>
+<h2 id="step-2-simple-geometry-optimisation">Step 2: Simple Geometry Optimisation</h2>
+<p>The 3d structure we have is geometrically perfect. Yet molecules are not. We'll need to perform some basic energy minimisaion to return something more realistic to save us ttime when we start running simulations at the quantum level. </p>
+<p>We can do this by using the <code>obminimize</code> function of <code>openbabel</code>:</p>
 <p><code>obminimize CHA.xyz &gt; CHA.2.xyz</code></p>
-<p>But we really should optimise our starting geometry as much as possible, and so we can use our QM engine to optimise the geometry further in accordance with the level of theory we've chosen. Since I want to generate atomistic parameters for the CHARMM36 MD forcefield, and previous similar parameterisation efforts have used the MP2/CC-PVDZ level of theory, I think it's where I'll start.</p>
+<h2 id="step-3-quantum-geometry-optimisation">Step 3: Quantum Geometry Optimisation</h2>
+<p>We really should optimise our starting geometry as much as possible, and so we can use our QM engine to optimise the geometry further in accordance with the level of theory we've chosen. Since I want to generate atomistic parameters for the CHARMM36 MD forcefield, and previous similar parameterisation efforts have used the MP2/CC-PVDZ level of theory, I think it's where I'll start.</p>
+<p>We're going to be using the program <a href="https://psicode.org">psi4</a> to run all of our QM calculations. I found it pretty easy to use considering it was my first time. Other common alternatives are <a href="https://www.faccts.de/orca/">ORCA</a> and <a href="https://gaussian.com">Gaussian</a>, the latter of which is paid.</p>
 <p>Psi4 has a jupyter/python API, but it also takes an input file written in <code>psithon</code>; basically python with some extra, psi4-specific stuff.</p>
 <p>My input file to optimise the geometry of our pre-optimised molecule (<code>psi4_optimise.dat</code>) is as follows:</p>
 <pre><code>import psi4
@@ -136,8 +136,8 @@ molecule.save_xyz_file(&quot;CHA.3.xyz&quot;,1)
 </code></pre>
 <p><code>scf_type df</code>, by the way, refers to the <strong>Self-Consistent Field</strong> procedure, which is the iterative process of solving the Schrödinger equation repeatedly to update the coefficients describing our orbitals, which we repeat until they converge. <strong>Density Fitting</strong> (DF)-SCF is a way of speeding up the procedure by introducing more approximations, although apparently the loss of accuracy is quite minimal.</p>
 <p>Running on 4 cores with <code>psi4 psi4_optimise.dat -n 4</code>, it finishes in about 3 minutes.</p>
-<h3 id="the-dihedral-scan">the dihedral scan</h3>
-<p>When doing a dihedral scan, what we're doing is fixing this dihedral at a given value, optimising the geometry to calculate the potential energy on the system, rotating the dihedral by a small amount, and repeating. We then return the potential energy vs. dihedral angle at the end, to plot the potential energy landscape (is this a correct term?) of the dihedral.</p>
+<h3 id="step-4-dihedral-scan">Step 4: Dihedral Scan</h3>
+<p>When doing a dihedral scan, what we're doing is fixing this dihedral at a given value, optimising the geometry to calculate the potential energy on the system, rotating the dihedral by a small amount, and repeating. We then return the potential energy vs. dihedral angle at the end, to plot the potential energy vs angle of the dihedral.</p>
 <p>I know from looking at the structure that the dihedral I'm after is D(2,4,5,10), where the numbers are the atom indices in our input structure. When I look in the output file, <code>psi4_optimise.out</code>, I can look for the value of this dihedral angle in the final optimisation step, and I see:</p>
 <pre><code>Coordinate      Previous         Force          Change          New
 ...
@@ -169,7 +169,7 @@ for psi in dih_range:
     PES_C.append((psi, E))
     molecule.save_xyz_file(out,1)
 </code></pre>
-<p>And voila - provided I haven't done anything horribly wrong, we have successfully done our dihedral scan!</p>
+<p>Which will result in a 2D array containing the angle(psi) and its corresponding energy.</p>
 <div class="footnote">
 <hr />
 <ol>
