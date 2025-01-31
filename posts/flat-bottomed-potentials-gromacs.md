@@ -12,9 +12,8 @@ They're also a little tricky to understand from a technical perspective.
 
 In this post, I'll briefly discuss the [maths](#the-maths), [how to implement](#implementation) an FBP in the [topology](#topology-file) and [restraints](#restraints-file) files, and finish up with some [practical notes for usage](#some-practical-notes). 
 
-***
-### The Maths
-While this is a technical guide, let's have a quick look at the maths behind an FBP, which isn't *that* terrible, even for a humble biologist such as myself. As we can see from the GROMACS manual, the general equation is given as:
+## The Maths
+As we can see from the GROMACS manual, the general equation for an FBP is given as:
 $$
 V_{fb}(r_i) = \frac{1}{2}k_{fb}[d_g(r_{i};R_{i}) - r_{fb}]^2 H[d_g(r_{i};R_{i}) - r_{fb}]
 $$
@@ -32,19 +31,17 @@ Figure A shows a "positive" (non-inverted) FBP, which **keeps a chosen atom with
 
 Figure B shows a "negative" (inverted) FBP, which instead **keeps the particle away from the shape**.
 
-***
-### Implementation
+## Implementation
 Now, what makes FBPs in GROMACS rather annoying from a technical perspective is the need to split the definition across two files:
 1. a section in the `.itp` topology file **defining the shape, radius, force constant**, as well as the specific **atoms to be restrained**.
 2. a `restraints.gro` file which **contains the x, y, and z coordinates** of our FBP region for a given atom
 
-To show how the two work together, let's walk through an example from one of my previous projects ([GitHub](https://github.com/MoMS-MMSB/lipid_sorting), [Publication](https://doi.org/10.1016/bs.mie.2024.03.022)), in which we use FBPs to define a pore region in a coarse-grained (Martini 3) membrane tubule, to stop lipids from passing through the pore.
+To show how the two work together, consider this example from one of my previous projects ([GitHub](https://github.com/MoMS-MMSB/lipid_sorting), [Publication](https://doi.org/10.1016/bs.mie.2024.03.022)), in which we use FBPs to define a pore region in a coarse-grained (Martini 3) membrane tubule, to stop lipids from passing through the pore.
 
 ![](https://github.com/MoMS-MMSB/lipid_sorting/blob/main/figures/Renders/POPC_POPE_r10_l10_pore/x_110_5deg_dof_notrj.gif?raw=true)
 <center><i> A POPC/POPE membrane tubule with pores in the x- and y- dimensions </i></center>
 
-***
-#### Topology File
+### Topology File
 To make these pores, I wanted two cylindrical FBPs crossing the box, one in x, one in y. By defining a negative radius of -2.5nm, I'm keeping the restrained molecules out of the FBP geometries. And I wanted a strong force constant, k=5000 (where k=$KJ \cdot mol^{-1}\cdot nm^{-2}$). 
 
 I define all of these in the **itp file for the molecule I want to restrain** (here, my coarse-grained phospholipid).
@@ -86,8 +83,7 @@ I define all of these in the **itp file for the molecule I want to restrain** (h
 
 This is a nice example, as we can see that we can define multiple FBPs on the same particle.
 
-***
-#### Restraints File
+### Restraints File
 However, you may notice that we haven't yet centered the FBP anywhere! This is where the `restraints.gro` file comes in.
 
 A snippet from my `restraints.gro` file looks like this:
@@ -113,8 +109,7 @@ On my [github](https://gist.github.com/jacksoncrowley/cdb4dffaefd14edd2a44f12b54
 
 `python gen_gromacs_restraints.py -c $INPUT_GRO -r POPC -r POPE -x 14.799 -y 14.799 -z 5`
 
-***
-### Some practical notes
+## Some practical notes
 - **A given particle can have multiple FBPs placed upon it, but they all must come from the same set of coordinates** as found in the `restraints.gro`. 
 - **A poorly placed flat-bottomed potential will probably cause your system to explode immediately**. If a system suddenly has a force of 5000 kJ/mol/nm^2 applied to every molecule in a given region, don't expect it to respond kindly. 
 - As such, be **generous with the radius** and **soft with the force constant**, at least at first. It may be a good practice to "grow" your FBP by gradually increasing $r$ and $k$ over a few subsequent simulations. Be kind to your simulations!
