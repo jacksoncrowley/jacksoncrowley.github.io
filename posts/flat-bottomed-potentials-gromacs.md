@@ -2,6 +2,7 @@
 ---
 title: "How to Use Flat-Bottomed Potentials in GROMACS"
 date: "2024-07-23"
+description: "A comprehensive tutorial on how flat-bottomed potentials work, and are implemented in GROMACS in both the structure and topology files."
 ---
 
 Flat bottomed potentials (FBPs) are a unique type of restraint we can apply to specific particles in a molecular dynamics simulation. 
@@ -111,6 +112,7 @@ On my [github](https://gist.github.com/jacksoncrowley/cdb4dffaefd14edd2a44f12b54
 
 `python gen_gromacs_restraints.py -c $INPUT_GRO -r POPC -r POPE -x 14.799 -y 14.799 -z 5`
 
+***
 ## Some practical notes
 - **A given particle can have multiple FBPs placed upon it, but they all must come from the same set of coordinates** as found in the `restraints.gro`. 
 - **A poorly placed flat-bottomed potential will probably cause your system to explode immediately**. If a system suddenly has a force of 5000 kJ/mol/nm^2 applied to every molecule in a given region, don't expect it to respond kindly. 

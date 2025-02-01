@@ -28,9 +28,10 @@ def copy_static_files():
 
 # Define post structure
 class Post:
-    def __init__(self, title, date, tags, slug, content):
+    def __init__(self, title, date, description, tags, slug, content):
         self.title = title
         self.date = date
+        self.description = description
         self.tags = tags
         self.slug = slug
         self.content = content
@@ -52,6 +53,7 @@ def load_posts():
                     title=post_data['title'],
                     date=post_data['date'],
                     tags=post_data.get('tags', []),
+                    description=post_data.get('description', ''),
                     slug=slug,
                     content=post_content
                 )

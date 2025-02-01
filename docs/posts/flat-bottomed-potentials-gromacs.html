@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A comprehensive tutorial on how flat-bottomed potentials work, and are implemented in GROMACS in both the structure and topology files.">
     <title>How to Use Flat-Bottomed Potentials in GROMACS</title>
     <link rel="stylesheet" href="/static/styles.css">
     <script type="text/x-mathjax-config">
@@ -30,7 +31,7 @@
         <article class="technical-post">
             <h1>How to Use Flat-Bottomed Potentials in GROMACS</h1>
             <time datetime="2024-07-23"><code>2024-07-23</code></time>
-            <p><p>Flat bottomed potentials (FBPs) are a unique (and powerful) type of restraint we can apply to specific particles in a molecular dynamics simulation. </p>
+            <p><p>Flat bottomed potentials (FBPs) are a unique type of restraint we can apply to specific particles in a molecular dynamics simulation. </p>
 <p>In short, we define <strong>a fixed geometric region within the simulation box to which certain atoms will either be attracted or repelled</strong>.</p>
 <p>They're also a little tricky to understand from a technical perspective.</p>
 <p>In this post, I'll briefly discuss the <a href="#the-maths">maths</a>, <a href="#implementation">how to implement</a> an FBP in the <a href="#topology-file">topology</a> and <a href="#restraints-file">restraints</a> files, and finish up with some <a href="#some-practical-notes">practical notes for usage</a>. </p>
@@ -83,6 +84,7 @@ with the most important parameters being:</p>
        12      2      7  -2.5   5000
 #endif
 </code></pre>
+<p>Where the columns correspond to:</p>
 <ol>
 <li>
 <p>The atom number within the molecule I'm restraining. </p>
@@ -120,6 +122,7 @@ with the most important parameters being:</p>
 <p>Since I'm <strong>not restraining the water (W)</strong> molecules, they can simply be left as is.</p>
 <p>On my <a href="https://gist.github.com/jacksoncrowley/cdb4dffaefd14edd2a44f12b54e45b83">github</a> I have a script that will take care of this, which would generate a restraints file from your starting structure file, which would be run as:</p>
 <p><code>python gen_gromacs_restraints.py -c $INPUT_GRO -r POPC -r POPE -x 14.799 -y 14.799 -z 5</code></p>
+<hr />
 <h2 id="some-practical-notes">Some practical notes</h2>
 <ul>
 <li><strong>A given particle can have multiple FBPs placed upon it, but they all must come from the same set of coordinates</strong> as found in the <code>restraints.gro</code>. </li>

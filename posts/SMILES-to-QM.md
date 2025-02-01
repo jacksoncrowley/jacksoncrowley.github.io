@@ -1,6 +1,7 @@
 ---
 title: 'Going from a SMILES string to QM dihedral scan'
 date: "2024-08-01"
+description: "Starting with a simple SMILES chemical string, we perform QM geometry optimisation and a dihedral scan, in order to parameterise missing dihedrals for molecular dynamics simulations."
 ---
 
 In this post, we'll take a SMILES string, convert that into a molecule file with optimised geometry, and finally perform a simple dihedral scan at the quantum chemical level. 

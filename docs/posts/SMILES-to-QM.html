@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Starting with a simple SMILES chemical string, we perform QM geometry optimisation and a dihedral scan, in order to parameterise missing dihedrals for molecular dynamics simulations.">
     <title>Going from a SMILES string to QM dihedral scan</title>
     <link rel="stylesheet" href="/static/styles.css">
     <script type="text/x-mathjax-config">
@@ -30,7 +31,7 @@
         <article class="technical-post">
             <h1>Going from a SMILES string to QM dihedral scan</h1>
             <time datetime="2024-08-01"><code>2024-08-01</code></time>
-            <p><p>In this post, we begin with nothing but a SMILES string, convert that into a molecule file with optimised geometry, and finally perform a simple dihedral scan at the quantum chemical level. </p>
+            <p><p>In this post, we'll take a SMILES string, convert that into a molecule file with optimised geometry, and finally perform a simple dihedral scan at the quantum chemical level. </p>
 <p>We'll start with a few of my basic notes on quantum chemistry, but feel free to skip that and jump right into the how-to by clicking <a href="#getting-started">here</a>.</p>
 <h3 id="attempting-to-understand-the-basics-of-ab-initio-computational-chemistry">attempting to understand the basics of <em>ab initio</em> computational chemistry</h3>
 <p>In MD simulations, we're using classical mechanics, and considering an atom as a single entity... which obviously, it isn't.</p>
