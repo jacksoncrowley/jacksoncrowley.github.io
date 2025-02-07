@@ -133,6 +133,7 @@ def main():
     generate_index()
     generate_technical(posts)
     generate_posts(posts)
+    generate_sitemap(posts)
     print("Site generated in 'docs/' directory.")
 
 if __name__ == "__main__":
