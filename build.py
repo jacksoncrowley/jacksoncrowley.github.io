@@ -11,6 +11,9 @@ index_template = env.get_template('index.html')
 technical_template = env.get_template('technical.html')
 post_template = env.get_template('post.html')
 
+# site configuration
+SITE_URL = "https://jacksoncrowley.xyz"
+
 # Copy static files
 def copy_static_files():
     static_dir = 'static'
@@ -35,6 +38,7 @@ class Post:
         self.tags = tags
         self.slug = slug
         self.content = content
+        self.canonical_url = f"{SITE_URL}/posts/{slug}.html"
 
 # Parse Markdown files in 'posts/' directory
 def load_posts():
@@ -83,6 +87,45 @@ def generate_posts(posts):
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
         with open(output_path, 'w') as f:
             f.write(post_template.render(post=post))
+
+# Generate sitemap
+def generate_sitemap(posts):
+    sitemap_content = ['<?xml version="1.0" encoding="UTF-8"?>',
+                      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    
+    # Add homepage
+    sitemap_content.extend([
+        '  <url>',
+        f'    <loc>{SITE_URL}/</loc>',
+        '    <changefreq>weekly</changefreq>',
+        '    <priority>1.0</priority>',
+        '  </url>'
+    ])
+    
+    # Add technical page
+    sitemap_content.extend([
+        '  <url>',
+        f'    <loc>{SITE_URL}/technical.html</loc>',
+        '    <changefreq>weekly</changefreq>',
+        '    <priority>0.8</priority>',
+        '  </url>'
+    ])
+    
+    # Add all posts
+    for post in posts:
+        sitemap_content.extend([
+            '  <url>',
+            f'    <loc>{post.canonical_url}</loc>',
+            f'    <lastmod>{post.date}</lastmod>',
+            '    <changefreq>monthly</changefreq>',
+            '    <priority>0.6</priority>',
+            '  </url>'
+        ])
+    
+    sitemap_content.append('</urlset>')
+    
+    with open('docs/sitemap.xml', 'w') as f:
+        f.write('\n'.join(sitemap_content))
 
 def main():
     copy_static_files()
