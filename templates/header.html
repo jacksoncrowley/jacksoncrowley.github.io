@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block meta %}{% endblock %}
+    <title>Jackson Crowley</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <header>
+        <h1>Jackson Crowley</h1>
+        <nav>
+            <a href="/" {% if active_page == 'home' %}data-current-page="true"{% endif %}>Home</a>
+            <a href="/protocols/" {% if active_page == 'protocols' %}data-current-page="true"{% endif %}>Protocols</a>
+        </nav>
+    </header>

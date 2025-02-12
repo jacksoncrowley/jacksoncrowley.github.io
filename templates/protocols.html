@@ -1,0 +1,14 @@
+{% with active_page='protocols', title='Protocols | Jackson Crowley' %}
+{% include 'header.html' %}
+{% endwith %}
+    <main>
+      <section id="posts">
+          {% for post in posts %}
+          <article class="posts-preview">
+              <time datetime="{{ post.date }}"><code>{{ post.date }}</code></time>
+              <h4><a href="{{ post.relative_url }}">{{ post.title }}</a></h4>
+          </article>
+          {% endfor %}
+      </section>
+    </main>
+{% include 'footer.html' %}

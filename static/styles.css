@@ -176,19 +176,19 @@ blockquote {
 }
 
 /* blog post */
-.technical-post time {
+.protocol time {
     margin-top: 1.0em;
 }
 
-.technical-post p {
+.protocol p {
     margin-bottom: 1.0em;
 }
 
-.technical-post h1 {
+.protocol h1 {
     margin-bottom: 0.5em; /* gives nice spacing for dates in posts */
 }
 
-.technical-post hr {
+.protocol hr {
     border: 1px dashed var(--maincolor);
     margin-bottom: 1.0em;
 }

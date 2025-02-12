@@ -8,7 +8,7 @@ from datetime import datetime
 # Load templates
 env = Environment(loader=FileSystemLoader('templates'))
 index_template = env.get_template('index.html')
-technical_template = env.get_template('technical.html')
+protocols_template = env.get_template('protocols.html')
 post_template = env.get_template('post.html')
 
 # site configuration
@@ -72,24 +72,24 @@ def generate_index():
     output_path = 'docs/index.html'
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     with open(output_path, 'w') as f:
-        f.write(index_template.render())
+        f.write(index_template.render(active_page='home'))
 
-# Generate technical page
-def generate_technical(posts):
-    # Create technical directory and place index.html inside
-    output_dir = 'docs/technical'
+# Generate protocols page
+def generate_protocols(posts):
+    # Create protocols directory and place index.html inside
+    output_dir = 'docs/protocols'
     os.makedirs(output_dir, exist_ok=True)
     with open(os.path.join(output_dir, 'index.html'), 'w') as f:
-        f.write(technical_template.render(posts=posts))
+        f.write(protocols_template.render(posts=posts, active_page='protocols'))
     
-    # Create a redirect from technical.html to technical/
-    with open('docs/technical.html', 'w') as f:
+    # Create a redirect from protocols.html to protocols/
+    with open('docs/protocols.html', 'w') as f:
         f.write(f'''
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="refresh" content="0; url=/technical/">
-        <link rel="canonical" href="{SITE_URL}/technical/" />
+        <meta http-equiv="refresh" content="0; url=/protocols/">
+        <link rel="canonical" href="{SITE_URL}/protocols/" />
     </head>
 </html>
 '''.strip())
@@ -131,10 +131,10 @@ def generate_sitemap(posts):
         '  </url>'
     ])
     
-    # Add technical page
+    # Add protocols page
     sitemap_content.extend([
         '  <url>',
-        f'    <loc>{SITE_URL}/technical/</loc>',
+        f'    <loc>{SITE_URL}/protocols/</loc>',
         '    <changefreq>weekly</changefreq>',
         '    <priority>0.8</priority>',
         '  </url>'
@@ -160,7 +160,7 @@ def main():
     copy_static_files()
     posts = load_posts()
     generate_index()
-    generate_technical(posts)
+    generate_protocols(posts)
     generate_posts(posts)
     generate_sitemap(posts)
     print("Site generated in 'docs/' directory.")
