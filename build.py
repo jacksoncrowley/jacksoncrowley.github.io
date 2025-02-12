@@ -38,7 +38,7 @@ class Post:
         self.tags = tags
         self.slug = slug
         self.content = content
-        self.canonical_url = f"{SITE_URL}/posts/{slug}.html"
+        self.canonical_url = f"{SITE_URL}/posts/{slug}/"
 
 # Parse Markdown files in 'posts/' directory
 def load_posts():
