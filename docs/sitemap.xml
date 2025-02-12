@@ -11,13 +11,13 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jacksoncrowley.xyz/posts/SMILES-to-QM.html</loc>
+    <loc>https://jacksoncrowley.xyz/posts/SMILES-to-QM/</loc>
     <lastmod>2024-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://jacksoncrowley.xyz/posts/flat-bottomed-potentials-gromacs.html</loc>
+    <loc>https://jacksoncrowley.xyz/posts/flat-bottomed-potentials-gromacs/</loc>
     <lastmod>2024-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
