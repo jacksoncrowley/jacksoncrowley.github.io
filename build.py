@@ -38,7 +38,9 @@ class Post:
         self.tags = tags
         self.slug = slug
         self.content = content
+        # Updated to use directory-style URLs
         self.canonical_url = f"{SITE_URL}/posts/{slug}/"
+        self.relative_url = f"/posts/{slug}/"  # Added for internal linking
 
 # Parse Markdown files in 'posts/' directory
 def load_posts():
@@ -74,19 +76,46 @@ def generate_index():
 
 # Generate technical page
 def generate_technical(posts):
-    output_path = 'docs/technical.html'
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    with open(output_path, 'w') as f:
+    # Create technical directory and place index.html inside
+    output_dir = 'docs/technical'
+    os.makedirs(output_dir, exist_ok=True)
+    with open(os.path.join(output_dir, 'index.html'), 'w') as f:
         f.write(technical_template.render(posts=posts))
-
+    
+    # Create a redirect from technical.html to technical/
+    with open('docs/technical.html', 'w') as f:
+        f.write(f'''
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="refresh" content="0; url=/technical/">
+        <link rel="canonical" href="{SITE_URL}/technical/" />
+    </head>
+</html>
+'''.strip())
 
 # Generate individual post pages
 def generate_posts(posts):
     for post in posts:
-        output_path = f'docs/posts/{post.slug}.html'
-        os.makedirs(os.path.dirname(output_path), exist_ok=True)
-        with open(output_path, 'w') as f:
+        # Create directory for each post
+        post_dir = f'docs/posts/{post.slug}'
+        os.makedirs(post_dir, exist_ok=True)
+        
+        # Create index.html inside the post directory
+        with open(os.path.join(post_dir, 'index.html'), 'w') as f:
             f.write(post_template.render(post=post))
+        
+        # Create a redirect from .html to directory version
+        with open(f'docs/posts/{post.slug}.html', 'w') as f:
+            f.write(f'''
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="refresh" content="0; url=/posts/{post.slug}/">
+        <link rel="canonical" href="{SITE_URL}/posts/{post.slug}/" />
+    </head>
+</html>
+'''.strip())
 
 # Generate sitemap
 def generate_sitemap(posts):
@@ -105,7 +134,7 @@ def generate_sitemap(posts):
     # Add technical page
     sitemap_content.extend([
         '  <url>',
-        f'    <loc>{SITE_URL}/technical.html</loc>',
+        f'    <loc>{SITE_URL}/technical/</loc>',
         '    <changefreq>weekly</changefreq>',
         '    <priority>0.8</priority>',
         '  </url>'
@@ -138,4 +167,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

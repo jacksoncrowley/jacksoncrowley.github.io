@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A comprehensive tutorial on how flat-bottomed potentials work, and are implemented in GROMACS in both the structure and topology files.">
+    <link rel="canonical" href="https://jacksoncrowley.xyz/posts/flat-bottomed-potentials-gromacs/"/>
+    <title>How to Use Flat-Bottomed Potentials in GROMACS</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+</head>
+<body>
+    <header>
+	<h1>Jackson Crowley</h1>
+        <nav>
+            <a href="/">Home</a>
+	    <a href="/technical.html">Technical</a>
+        </nav>
+    </header>
+
+    <main>
+        <article class="technical-post">
+            <h1>How to Use Flat-Bottomed Potentials in GROMACS</h1>
+            <time datetime="2024-07-23"><code>2024-07-23</code></time>
+            <p><p>Flat bottomed potentials (FBPs) are a unique type of restraint we can apply to specific particles in a molecular dynamics simulation. </p>
+<p>In short, we define <strong>a fixed geometric region within the simulation box to which certain atoms will either be attracted or repelled</strong>.</p>
+<p>They're also a little tricky to understand from a technical perspective.</p>
+<p>In this post, I'll briefly discuss the <a href="#the-maths">maths</a>, <a href="#implementation">how to implement</a> an FBP in the <a href="#topology-file">topology</a> and <a href="#restraints-file">restraints</a> files, and finish up with some <a href="#some-practical-notes">practical notes for usage</a>. </p>
+<h2 id="the-maths">The Maths</h2>
+<p>As we can see from the GROMACS manual, the general equation for an FBP is given as:
+$$
+V_{fb}(r_i) = \frac{1}{2}k_{fb}[d_g(r_{i};R_{i}) - r_{fb}]^2 H[d_g(r_{i};R_{i}) - r_{fb}]
+$$
+with the most important parameters being:</p>
+<ul>
+<li>$d_g(r_{i};R_{I})$, the geometry of the shape we wish to define (FBPs can be spheres, cylinders, or layers, see the <a href="https://manual.gromacs.org/2024.2/reference-manual/functions/restraints.html#flat-bottomed-position-restraints">GROMACS manual</a> for more info on the shapes).</li>
+<li>$r$, the radius of our shape. <strong>A negative radius keeps atoms outside of our FBP region, a positive radius keeps them within</strong>.</li>
+<li>$k$, the force constant applied to the chosen atoms when they are not <strong>inside or outside</strong> of our chosen shape.</li>
+<li>$H$, the Heaviside step function which "turns on" the force constant once a restrained atom leaves the FBP region.</li>
+</ul>
+<p>Now, let's have a look at an image from the GROMACS manual:</p>
+<p><img alt="" src="https://manual.gromacs.org/2024.2/_images/fbposres.png" /></p>
+<p>Figure A shows a "positive" (non-inverted) FBP, which <strong>keeps a chosen atom within a certain shape</strong>, by applying a force of $k$ if the restrained particle strays outside of the radius $r_{fb}$.</p>
+<p>Figure B shows a "negative" (inverted) FBP, which instead <strong>keeps the particle away from the shape</strong>.</p>
+<h2 id="implementation">Implementation</h2>
+<p>Now, what makes FBPs in GROMACS rather annoying from a technical perspective is the need to split the definition across two files:
+1. a section in the <code>.itp</code> topology file <strong>defining the shape, radius, force constant</strong>, as well as the specific <strong>atoms to be restrained</strong>.
+2. a <code>restraints.gro</code> file which <strong>contains the x, y, and z coordinates</strong> of our FBP region for a given atom</p>
+<p>To show how the two work together, consider this example from one of my previous projects (<a href="https://github.com/MoMS-MMSB/lipid_sorting">GitHub</a>, <a href="https://doi.org/10.1016/bs.mie.2024.03.022">Publication</a>), in which we use FBPs to define a pore region in a coarse-grained (Martini 3) membrane tubule, to stop lipids from passing through the pore.</p>
+<p><img alt="" src="https://github.com/MoMS-MMSB/lipid_sorting/blob/main/figures/Renders/POPC_POPE_r10_l10_pore/x_110_5deg_dof_notrj.gif?raw=true" />
+<center><i> A POPC/POPE membrane tubule with pores in the x- and y- dimensions </i></center></p>
+<h3 id="topology-file">Topology File</h3>
+<p>To make these pores, I wanted two cylindrical FBPs crossing the box, one in x, one in y. By defining a negative radius of -2.5nm, I'm keeping the restrained molecules out of the FBP geometries. And I wanted a strong force constant, k=5000 (where k=$KJ \cdot mol^{-1}\cdot nm^{-2}$). </p>
+<p>I define all of these in the <strong>itp file for the molecule I want to restrain</strong> (here, my coarse-grained phospholipid).</p>
+<pre><code>#ifdef POSRES_PL
+; Flat-bottomed position restraint for each PL
+[ position_restraints ]
+; numatoms  functype  g   r   k
+;                       (nm) (kJ mol−1nm−2)
+       05      2      6  -2.5   5000
+       06      2      6  -2.5   5000
+       07      2      6  -2.5   5000
+       08      2      6  -2.5   5000
+       09      2      6  -2.5   5000
+       10      2      6  -2.5   5000
+       11      2      6  -2.5   5000
+       12      2      6  -2.5   5000
+       05      2      7  -2.5   5000
+       06      2      7  -2.5   5000
+       07      2      7  -2.5   5000
+       08      2      7  -2.5   5000
+       09      2      7  -2.5   5000
+       10      2      7  -2.5   5000
+       11      2      7  -2.5   5000
+       12      2      7  -2.5   5000
+#endif
+</code></pre>
+<p>Where the columns correspond to:</p>
+<ol>
+<li>
+<p>The atom number within the molecule I'm restraining. </p>
+</li>
+<li>
+<p>The function type: here, we put a 2 for all entries, which is the function type for FBPs under the <code>[position_restraints]</code> directive.</p>
+</li>
+<li>
+<p>The shape (g) of the FBP. Here, I'm using <code>6</code> for a cylinder spanning the x-dimension, and <code>7</code> for a cylinder spanning the y-dimension.</p>
+</li>
+<li>
+<p>The radius $r$ of the FBP.</p>
+</li>
+<li>
+<p>The force constant $k$.</p>
+</li>
+</ol>
+<p>This is a nice example, as we can see that we can define multiple FBPs on the same particle.</p>
+<h3 id="restraints-file">Restraints File</h3>
+<p>However, you may notice that we haven't yet centered the FBP anywhere! This is where the <code>restraints.gro</code> file comes in.</p>
+<p>A snippet from my <code>restraints.gro</code> file looks like this:</p>
+<pre><code>Expect a large membrane in water
+71260
+    1POPC   NC3    1  14.799  14.799  05.000
+    1POPC   PO4    2  14.799  14.799  05.000
+    1POPC   GL1    3  14.799  14.799  05.000
+    1POPC   GL2    4  14.799  14.799  05.000
+    1POPC   C1A    5  14.799  14.799  05.000
+...
+55975W        W75687  10.673  25.982   5.496  0.0510  0.0486 -0.2671
+55976W        W75688  22.924  23.116   3.672  0.0720  0.0694 -0.1156
+  29.59805  29.59805  10.00000
+</code></pre>
+<p>Since I'm <strong>restraining the POPC</strong> lipids, I define the FBP center of geometry on the POPC particles/atoms as x,y,z in the gro file coordinates. </p>
+<p>Since I'm <strong>not restraining the water (W)</strong> molecules, they can simply be left as is.</p>
+<p>On my <a href="https://gist.github.com/jacksoncrowley/cdb4dffaefd14edd2a44f12b54e45b83">github</a> I have a script that will take care of this, which would generate a restraints file from your starting structure file, which would be run as:</p>
+<p><code>python gen_gromacs_restraints.py -c $INPUT_GRO -r POPC -r POPE -x 14.799 -y 14.799 -z 5</code></p>
+<hr />
+<h2 id="some-practical-notes">Some practical notes</h2>
+<ul>
+<li><strong>A given particle can have multiple FBPs placed upon it, but they all must come from the same set of coordinates</strong> as found in the <code>restraints.gro</code>. </li>
+<li><strong>A poorly placed flat-bottomed potential will probably cause your system to explode immediately</strong>. If a system suddenly has a force of 5000 kJ/mol/nm^2 applied to every molecule in a given region, don't expect it to respond kindly. </li>
+<li>As such, be <strong>generous with the radius</strong> and <strong>soft with the force constant</strong>, at least at first. It may be a good practice to "grow" your FBP by gradually increasing $r$ and $k$ over a few subsequent simulations. Be kind to your simulations!</li>
+<li>You can check the <code>.log</code> file to make sure your FBP is actually running; there should be an entry <code>Flat-b. P-R.</code>. If it shows a 0.00000, this means that no particles are currently being affected by the FBPs.</li>
+<li><strong>If an FBP has been defined in the topology, it will not run without a restraints.gro</strong> file, which is flagged at the <code>gmx grompp</code> step with <code>-r</code>. If you're not sure if you've got it working properly, try <code>grompp</code>-ing without <code>-r</code>.</li>
+</ul></p>
+        </article>
+    </main>
+    <footer>
+        <p>&copy; 2025 Jackson Crowley</p>
+        <div class="social-icons">
+                <a href="https://github.com/jacksoncrowley" target="_blank">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="github-icon">
+                                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path>
+                        </svg>
+                </a>
+                <a href="https://linkedin.com/in/jackson-crowley" target="_blank">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="linkedin-icon">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                </a>
+        </div>
+    </footer>
+</body>
+</html>
