@@ -103,7 +103,7 @@ def generate_posts(posts):
         
         # Create index.html inside the post directory
         with open(os.path.join(post_dir, 'index.html'), 'w') as f:
-            f.write(post_template.render(post=post))
+            f.write(post_template.render(post=post, active_page="post"))
         
         # Create a redirect from .html to directory version
         with open(f'docs/posts/{post.slug}.html', 'w') as f:
