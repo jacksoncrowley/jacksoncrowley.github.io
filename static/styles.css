@@ -115,6 +115,12 @@ nav a[data-current-page="true"] {
     color: var(--maincolor);
 }
 
+hr {
+    border: 1px dashed var(--maincolor);
+    margin-bottom: 1.0em;
+}
+
+
 /* Content Sections */
 section {
     margin-bottom: var(--spacing);
@@ -187,12 +193,6 @@ blockquote {
 .protocol h1 {
     margin-bottom: 0.5em; /* gives nice spacing for dates in posts */
 }
-
-.protocol hr {
-    border: 1px dashed var(--maincolor);
-    margin-bottom: 1.0em;
-}
-
 
 /* Footer */
 footer {
