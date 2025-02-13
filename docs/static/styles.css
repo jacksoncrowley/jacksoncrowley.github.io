@@ -211,7 +211,9 @@ footer {
 }
 
 .github-icon,
-.linkedin-icon {
+.linkedin-icon,
+.scholar-icon,
+.x-icon {
     height: 20px;
     width: 20px;
     fill: var(--footercolor);
@@ -219,6 +221,8 @@ footer {
 }
 
 footer a:hover .github-icon,
-footer a:hover .linkedin-icon {
+footer a:hover .linkedin-icon,
+footer a:hover .scholar-icon,
+footer a:hover .x-icon {
     fill: var(--maincolor);
 }
