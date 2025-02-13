@@ -1,7 +1,7 @@
 {% with active_page='post', meta='<meta name="description" content="' + post.description + '"><link rel="canonical" href="' + post.canonical_url + '"/>', title=post.title %}
 {% include 'header.html' %}
 {% endwith %}
-    <main class="technical-post">
+    <main class="protocol">
         {{ post.content | safe }}
     </main>
 {% include 'footer.html' %}
