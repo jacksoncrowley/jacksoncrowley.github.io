@@ -9,6 +9,7 @@ from datetime import datetime
 env = Environment(loader=FileSystemLoader('templates'))
 index_template = env.get_template('index.html')
 protocols_template = env.get_template('protocols.html')
+cv_template = env.get_template('cv.html')
 post_template = env.get_template('post.html')
 
 # site configuration
@@ -94,6 +95,14 @@ def generate_protocols(posts):
 </html>
 '''.strip())
 
+# Generate CV
+def generate_cv():
+    # Create cv directory and place index.html inside
+    output_dir = 'docs/cv'
+    os.makedirs(output_dir, exist_ok=True)
+    with open(os.path.join(output_dir, 'index.html'), 'w') as f:
+        f.write(cv_template.render(active_page='cv'))
+ 
 # Generate individual post pages
 def generate_posts(posts):
     for post in posts:
@@ -161,6 +170,7 @@ def main():
     posts = load_posts()
     generate_index()
     generate_protocols(posts)
+    generate_cv()
     generate_posts(posts)
     generate_sitemap(posts)
     print("Site generated in 'docs/' directory.")

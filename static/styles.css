@@ -49,7 +49,10 @@ main {
     flex: 1;
 }
 
-/* Typography */
+main.page-cv {
+    max-width: calc(var(--maxwidth) * 1.25);
+}
+
 h1 {
     font-family: var(--headerfont);
     font-size: 2rem;
@@ -58,6 +61,10 @@ h1 {
 
 p {
     line-height: 2;
+}
+#cv p {
+    line-height: 1.5;
+    margin-bottom: 0.2em;
 }
 
 /* Links */
@@ -116,10 +123,10 @@ nav a[data-current-page="true"] {
 }
 
 hr {
+    margin-top: 0.5em;
     border: 1px dashed var(--maincolor);
-    margin-bottom: 1.0em;
+    margin-bottom: 0.5em;
 }
-
 
 /* Content Sections */
 section {
@@ -226,3 +233,4 @@ footer a:hover .scholar-icon,
 footer a:hover .x-icon {
     fill: var(--maincolor);
 }
+
