@@ -13,7 +13,7 @@ cv_template = env.get_template('cv.html')
 post_template = env.get_template('post.html')
 
 # site configuration
-SITE_URL = "https://jacksoncrowley.xyz"
+SITE_URL = "https://j-crowley.com"
 
 # Copy static files
 def copy_static_files():
@@ -65,7 +65,7 @@ def load_posts():
                     content=post_content
                 )
                 posts.append(post)
-    posts.sort(key=lambda post: datetime.strptime(post.date, "%Y-%m-%d"), reverse=True)
+    posts.sort(key=lambda post: datetime.strptime(str(post.date), "%Y-%m-%d"), reverse=True)
     return posts
 
 # Generate index page

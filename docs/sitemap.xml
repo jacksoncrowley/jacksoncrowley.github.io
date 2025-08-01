@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://jacksoncrowley.xyz/</loc>
+    <loc>https://j-crowley.com/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://jacksoncrowley.xyz/protocols/</loc>
+    <loc>https://j-crowley.com/protocols/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jacksoncrowley.xyz/posts/SMILES-to-QM/</loc>
+    <loc>https://j-crowley.com/posts/stabilising-structures/</loc>
+    <lastmod>2025-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://j-crowley.com/posts/SMILES-to-QM/</loc>
     <lastmod>2024-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://jacksoncrowley.xyz/posts/flat-bottomed-potentials-gromacs/</loc>
+    <loc>https://j-crowley.com/posts/flat-bottomed-potentials-gromacs/</loc>
     <lastmod>2024-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
