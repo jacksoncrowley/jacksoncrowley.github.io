@@ -52,8 +52,7 @@ A really, really important note is that if a single molecule is decoupled, you s
 
 The [manual](https://manual.gromacs.org/2024.4/user-guide/mdp-options.html#free-energy-calculations), obviously, has plenty more information.
 
----
 
 If you try all of these and the simulation is still not stable, I'd pretty confidently suggest that your structure has some very serious stability issues, likely in the bonded interactions. Until then, happy stabilisation!
 
-[^1]: A spherical flat-bottomed potential is great here; see my [[flat-bottomed-potentials-gromacs|guide]] on how to implement them.
+[^1]: A spherical flat-bottomed potential is great here; see my [guide on how to implement them](/posts/flat-bottomed-potentials-gromacs/).

@@ -66,13 +66,12 @@ delta-lambda    = 0.01
 <p>GROMACS will throw an error if the simulation would have the lambda value exceed 1. </p>
 <p>A really, really important note is that if a single molecule is decoupled, you should consider it effectively in vacuum; no longer interacting with the rest of the molecules, it's free to fly around wherever it wishes. Consider restraining it in place with <a href="https://manual.gromacs.org/2024.4/reference-manual/functions/restraints.html">position restraints</a> if your <code>delta-lambda</code> process is rather slow <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>.</p>
 <p>The <a href="https://manual.gromacs.org/2024.4/user-guide/mdp-options.html#free-energy-calculations">manual</a>, obviously, has plenty more information.</p>
-<hr />
 <p>If you try all of these and the simulation is still not stable, I'd pretty confidently suggest that your structure has some very serious stability issues, likely in the bonded interactions. Until then, happy stabilisation!</p>
 <div class="footnote">
 <hr />
 <ol>
 <li id="fn:1">
-<p>A spherical flat-bottomed potential is great here; see my [[flat-bottomed-potentials-gromacs|guide]] on how to implement them.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<p>A spherical flat-bottomed potential is great here; see my <a href="/posts/flat-bottomed-potentials-gromacs/">guide on how to implement them</a>.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>

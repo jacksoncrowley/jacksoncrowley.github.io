@@ -3,11 +3,12 @@
 title: "How to Use Flat-Bottomed Potentials in GROMACS"
 date: "2024-07-23"
 description: "A comprehensive tutorial on how flat-bottomed potentials work, and are implemented in GROMACS in both the structure and topology files."
----
+tags: ["molecular-dynamics", "gromacs"]
 
+---
 Flat bottomed potentials (FBPs) are a unique type of restraint we can apply to specific particles in a molecular dynamics simulation. 
 
-In short, we define **a fixed geometric region within the simulation box to which certain atoms will either be attracted or repelled**.
+In short, we define *a fixed geometric region within the simulation box to which certain atoms will either be attracted or repelled*.
 
 They're also a little tricky to understand from a technical perspective.
 
@@ -21,22 +22,22 @@ $$
 with the most important parameters being:
 
 - $d_g(r_{i};R_{I})$, the geometry of the shape we wish to define (FBPs can be spheres, cylinders, or layers, see the [GROMACS manual](https://manual.gromacs.org/2024.2/reference-manual/functions/restraints.html#flat-bottomed-position-restraints) for more info on the shapes).
-- $r$, the radius of our shape. **A negative radius keeps atoms outside of our FBP region, a positive radius keeps them within**.
-- $k$, the force constant applied to the chosen atoms when they are not **inside or outside** of our chosen shape.
+- $r$, the radius of our shape. *A negative radius keeps atoms outside of our FBP region, a positive radius keeps them within*.
+- $k$, the force constant applied to the chosen atoms when they are not *inside or outside* of our chosen shape.
 - $H$, the Heaviside step function which "turns on" the force constant once a restrained atom leaves the FBP region.
 
 Now, let's have a look at an image from the GROMACS manual:
 
 ![](https://manual.gromacs.org/2024.2/_images/fbposres.png)
 
-Figure A shows a "positive" (non-inverted) FBP, which **keeps a chosen atom within a certain shape**, by applying a force of $k$ if the restrained particle strays outside of the radius $r_{fb}$.
+Figure A shows a "positive" (non-inverted) FBP, which *keeps a chosen atom within a certain shape*, by applying a force of $k$ if the restrained particle strays outside of the radius $r_{fb}$.
 
-Figure B shows a "negative" (inverted) FBP, which instead **keeps the particle away from the shape**.
+Figure B shows a "negative" (inverted) FBP, which instead *keeps the particle away from the shape*.
 
 ## Implementation
 Now, what makes FBPs in GROMACS rather annoying from a technical perspective is the need to split the definition across two files:
-1. a section in the `.itp` topology file **defining the shape, radius, force constant**, as well as the specific **atoms to be restrained**.
-2. a `restraints.gro` file which **contains the x, y, and z coordinates** of our FBP region for a given atom
+1. a section in the `.itp` topology file *defining the shape, radius, force constant*, as well as the specific *atoms to be restrained*.
+2. a `restraints.gro` file which *contains the x, y, and z coordinates* of our FBP region for a given atom
 
 To show how the two work together, consider this example from one of my previous projects ([GitHub](https://github.com/MoMS-MMSB/lipid_sorting), [Publication](https://doi.org/10.1016/bs.mie.2024.03.022)), in which we use FBPs to define a pore region in a coarse-grained (Martini 3) membrane tubule, to stop lipids from passing through the pore.
 
@@ -46,7 +47,7 @@ To show how the two work together, consider this example from one of my previous
 ### Topology File
 To make these pores, I wanted two cylindrical FBPs crossing the box, one in x, one in y. By defining a negative radius of -2.5nm, I'm keeping the restrained molecules out of the FBP geometries. And I wanted a strong force constant, k=5000 (where k=$KJ \cdot mol^{-1}\cdot nm^{-2}$). 
 
-I define all of these in the **itp file for the molecule I want to restrain** (here, my coarse-grained phospholipid).
+I define all of these in the *itp file for the molecule I want to restrain* (here, my coarse-grained phospholipid).
 
 ```
 #ifdef POSRES_PL
@@ -104,9 +105,9 @@ Expect a large membrane in water
   29.59805  29.59805  10.00000
 ```
 
-Since I'm **restraining the POPC** lipids, I define the FBP center of geometry on the POPC particles/atoms as x,y,z in the gro file coordinates. 
+Since I'm *restraining the POPC* lipids, I define the FBP center of geometry on the POPC particles/atoms as x,y,z in the gro file coordinates. 
 
-Since I'm **not restraining the water (W)** molecules, they can simply be left as is.
+Since I'm *not restraining the water (W)* molecules, they can simply be left as is.
 
 On my [github](https://gist.github.com/jacksoncrowley/cdb4dffaefd14edd2a44f12b54e45b83) I have a script that will take care of this, which would generate a restraints file from your starting structure file, which would be run as:
 
@@ -114,8 +115,8 @@ On my [github](https://gist.github.com/jacksoncrowley/cdb4dffaefd14edd2a44f12b54
 
 ***
 ## Some practical notes
-- **A given particle can have multiple FBPs placed upon it, but they all must come from the same set of coordinates** as found in the `restraints.gro`. 
-- **A poorly placed flat-bottomed potential will probably cause your system to explode immediately**. If a system suddenly has a force of 5000 kJ/mol/nm^2 applied to every molecule in a given region, don't expect it to respond kindly. 
-- As such, be **generous with the radius** and **soft with the force constant**, at least at first. It may be a good practice to "grow" your FBP by gradually increasing $r$ and $k$ over a few subsequent simulations. Be kind to your simulations!
+- *A given particle can have multiple FBPs placed upon it, but they all must come from the same set of coordinates* as found in the `restraints.gro`. 
+- *A poorly placed flat-bottomed potential will probably cause your system to explode immediately*. If a system suddenly has a force of 5000 kJ/mol/nm^2 applied to every molecule in a given region, don't expect it to respond kindly. 
+- As such, be *generous with the radius* and *soft with the force constant*, at least at first. It may be a good practice to "grow" your FBP by gradually increasing $r$ and $k$ over a few subsequent simulations. Be kind to your simulations!
 - You can check the `.log` file to make sure your FBP is actually running; there should be an entry `Flat-b. P-R.`. If it shows a 0.00000, this means that no particles are currently being affected by the FBPs.
-- **If an FBP has been defined in the topology, it will not run without a restraints.gro** file, which is flagged at the `gmx grompp` step with `-r`. If you're not sure if you've got it working properly, try `grompp`-ing without `-r`.
+- *If an FBP has been defined in the topology, it will not run without a restraints.gro* file, which is flagged at the `gmx grompp` step with `-r`. If you're not sure if you've got it working properly, try `grompp`-ing without `-r`.

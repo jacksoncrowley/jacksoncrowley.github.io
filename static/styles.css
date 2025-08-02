@@ -234,4 +234,7 @@ footer a:hover .scholar-icon,
 footer a:hover .x-icon {
     fill: var(--maincolor);
 }
-
+iframe {
+    display: block;
+    border-style:none;
+}

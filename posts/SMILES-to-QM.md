@@ -1,9 +1,10 @@
 ---
-title: 'Going from a SMILES string to QM dihedral scan'
-date: "2024-08-01"
-description: "Starting with a simple SMILES chemical string, we perform QM geometry optimisation and a dihedral scan, in order to parameterise missing dihedrals for molecular dynamics simulations."
+title: Going from a SMILES string to QM dihedral scan
+date: 2024-08-01
+description: Starting with a simple SMILES chemical string, we perform QM geometry optimisation and a dihedral scan, in order to parameterise missing dihedrals for molecular dynamics simulations.
+tags:
+  - psi4
 ---
-
 In this post, we'll take a SMILES string, convert that into a molecule file with optimised geometry, and finally perform a simple dihedral scan at the quantum chemical level. 
 
 We'll start with a few of my basic notes on quantum chemistry, but feel free to skip that and jump right into the how-to by clicking [here](#getting-started).
@@ -20,21 +21,21 @@ $
 
 Where $\hat{H}$ is the hamiltonian, and the uppercase psi $\Psi$ is the wave function. It's this wave function that we're attempting to calculate, as it is what contains all of the information in the system. 
 
-There are a variety of **methods** to do this; the [Hartree-Fock](https://en.wikipedia.org/wiki/Hartree%E2%80%93Fock_method)(HF) is widely known and has been around for decades, although there are plenty of others, including *post*-Hartree-Fock methods like **Møller–Plesset perturbation theory** (MP).
+There are a variety of *methods* to do this; the [Hartree-Fock](https://en.wikipedia.org/wiki/Hartree%E2%80%93Fock_method)(HF) is widely known and has been around for decades, although there are plenty of others, including *post*-Hartree-Fock methods like *Møller–Plesset perturbation theory* (MP).
 
-Once we have our method, we need to choose the appropriate mathematical functions to represent the electron orbitals. This set of functions are called the **basis set**.
+Once we have our method, we need to choose the appropriate mathematical functions to represent the electron orbitals. This set of functions are called the *basis set*.
 
 With the two working in tandem, we can calculate the wave function, and extract the information we're really after, namely potential energy. This combination of method and basis set will vary from system to system, a constant interplay between computational cost, accuracy, and applicability. New methods and basis sets are continually being developed, as what we're really doing is calculating an approximation. 
 
-We call the combination of method and basis set the **level of theory**, which describes the degree of approximation used to solve the Schrödinger equation for our system, expressed as:
+We call the combination of method and basis set the *level of theory*, which describes the degree of approximation used to solve the Schrödinger equation for our system, expressed as:
 
-> **Method/Basis Set**
+> *Method/Basis Set*
 >
 > i.e.
 > 
-> **HF/6-31G***
+> *HF/6-31G*
 >
-> **MP2/CC-PVDZ**
+> *MP2/CC-PVDZ*
 
 
 ## Getting Started
@@ -80,14 +81,14 @@ H          4.67278        1.79802        2.59618
 
 It's an extremely simple format: the first line shows us we have 24 atoms, the second line is blank, but you can write a descriptor "i.e. Cyclohexyl acetate"[^4], and the rest of the lines are organised to show the atom type and it's x, y, z cartesian coordinates. 
 
-## Step 2: Simple Geometry Optimisation
+### Step 2: Simple Geometry Optimisation
 The 3d structure we have is geometrically perfect. Yet molecules are not. We'll need to perform some basic energy minimisaion to return something more realistic to save us ttime when we start running simulations at the quantum level. 
 
 We can do this by using the ```obminimize``` function of ```openbabel```:
 
 ```obminimize CHA.xyz > CHA.2.xyz```
 
-## Step 3: Quantum Geometry Optimisation
+### Step 3: Quantum Geometry Optimisation
 We really should optimise our starting geometry as much as possible, and so we can use our QM engine to optimise the geometry further in accordance with the level of theory we've chosen. Since I want to generate atomistic parameters for the CHARMM36 MD forcefield, and previous similar parameterisation efforts have used the MP2/CC-PVDZ level of theory, I think it's where I'll start.
 
 We're going to be using the program [psi4](https://psicode.org) to run all of our QM calculations. I found it pretty easy to use considering it was my first time. Other common alternatives are [ORCA](https://www.faccts.de/orca/) and [Gaussian](https://gaussian.com), the latter of which is paid.
@@ -139,7 +140,7 @@ optimize('scf')
 molecule.save_xyz_file("CHA.3.xyz",1)
 ```
 
-```scf_type df```, by the way, refers to the **Self-Consistent Field** procedure, which is the iterative process of solving the Schrödinger equation repeatedly to update the coefficients describing our orbitals, which we repeat until they converge. **Density Fitting** (DF)-SCF is a way of speeding up the procedure by introducing more approximations, although apparently the loss of accuracy is quite minimal.
+```scf_type df```, by the way, refers to the *Self-Consistent Field* procedure, which is the iterative process of solving the Schrödinger equation repeatedly to update the coefficients describing our orbitals, which we repeat until they converge. *Density Fitting* (DF)-SCF is a way of speeding up the procedure by introducing more approximations, although apparently the loss of accuracy is quite minimal.
 
 
 Running on 4 cores with ```psi4 psi4_optimise.dat -n 4```, it finishes in about 3 minutes.

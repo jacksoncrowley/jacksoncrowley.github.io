@@ -43,15 +43,15 @@
 \hat{H} \Psi = E \Psi
 $</p>
 <p>Where $\hat{H}$ is the hamiltonian, and the uppercase psi $\Psi$ is the wave function. It's this wave function that we're attempting to calculate, as it is what contains all of the information in the system. </p>
-<p>There are a variety of <strong>methods</strong> to do this; the <a href="https://en.wikipedia.org/wiki/Hartree%E2%80%93Fock_method">Hartree-Fock</a>(HF) is widely known and has been around for decades, although there are plenty of others, including <em>post</em>-Hartree-Fock methods like <strong>Møller–Plesset perturbation theory</strong> (MP).</p>
-<p>Once we have our method, we need to choose the appropriate mathematical functions to represent the electron orbitals. This set of functions are called the <strong>basis set</strong>.</p>
+<p>There are a variety of <em>methods</em> to do this; the <a href="https://en.wikipedia.org/wiki/Hartree%E2%80%93Fock_method">Hartree-Fock</a>(HF) is widely known and has been around for decades, although there are plenty of others, including <em>post</em>-Hartree-Fock methods like <em>Møller–Plesset perturbation theory</em> (MP).</p>
+<p>Once we have our method, we need to choose the appropriate mathematical functions to represent the electron orbitals. This set of functions are called the <em>basis set</em>.</p>
 <p>With the two working in tandem, we can calculate the wave function, and extract the information we're really after, namely potential energy. This combination of method and basis set will vary from system to system, a constant interplay between computational cost, accuracy, and applicability. New methods and basis sets are continually being developed, as what we're really doing is calculating an approximation. </p>
-<p>We call the combination of method and basis set the <strong>level of theory</strong>, which describes the degree of approximation used to solve the Schrödinger equation for our system, expressed as:</p>
+<p>We call the combination of method and basis set the <em>level of theory</em>, which describes the degree of approximation used to solve the Schrödinger equation for our system, expressed as:</p>
 <blockquote>
-<p><strong>Method/Basis Set</strong></p>
+<p><em>Method/Basis Set</em></p>
 <p>i.e.</p>
-<p><strong>HF/6-31G</strong>*</p>
-<p><strong>MP2/CC-PVDZ</strong></p>
+<p><em>HF/6-31G</em></p>
+<p><em>MP2/CC-PVDZ</em></p>
 </blockquote>
 <h2 id="getting-started">Getting Started</h2>
 <h3 id="step-1-converting-a-smiles-string-to-a-3d-structure">Step 1: Converting a SMILES string to a 3d structure</h3>
@@ -88,11 +88,11 @@ H          4.74681        2.94859        1.28212
 H          4.67278        1.79802        2.59618
 </code></pre>
 <p>It's an extremely simple format: the first line shows us we have 24 atoms, the second line is blank, but you can write a descriptor "i.e. Cyclohexyl acetate"<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>, and the rest of the lines are organised to show the atom type and it's x, y, z cartesian coordinates. </p>
-<h2 id="step-2-simple-geometry-optimisation">Step 2: Simple Geometry Optimisation</h2>
+<h3 id="step-2-simple-geometry-optimisation">Step 2: Simple Geometry Optimisation</h3>
 <p>The 3d structure we have is geometrically perfect. Yet molecules are not. We'll need to perform some basic energy minimisaion to return something more realistic to save us ttime when we start running simulations at the quantum level. </p>
 <p>We can do this by using the <code>obminimize</code> function of <code>openbabel</code>:</p>
 <p><code>obminimize CHA.xyz &gt; CHA.2.xyz</code></p>
-<h2 id="step-3-quantum-geometry-optimisation">Step 3: Quantum Geometry Optimisation</h2>
+<h3 id="step-3-quantum-geometry-optimisation">Step 3: Quantum Geometry Optimisation</h3>
 <p>We really should optimise our starting geometry as much as possible, and so we can use our QM engine to optimise the geometry further in accordance with the level of theory we've chosen. Since I want to generate atomistic parameters for the CHARMM36 MD forcefield, and previous similar parameterisation efforts have used the MP2/CC-PVDZ level of theory, I think it's where I'll start.</p>
 <p>We're going to be using the program <a href="https://psicode.org">psi4</a> to run all of our QM calculations. I found it pretty easy to use considering it was my first time. Other common alternatives are <a href="https://www.faccts.de/orca/">ORCA</a> and <a href="https://gaussian.com">Gaussian</a>, the latter of which is paid.</p>
 <p>Psi4 has a jupyter/python API, but it also takes an input file written in <code>psithon</code>; basically python with some extra, psi4-specific stuff.</p>
@@ -138,7 +138,7 @@ optimize('scf')
 
 molecule.save_xyz_file(&quot;CHA.3.xyz&quot;,1)
 </code></pre>
-<p><code>scf_type df</code>, by the way, refers to the <strong>Self-Consistent Field</strong> procedure, which is the iterative process of solving the Schrödinger equation repeatedly to update the coefficients describing our orbitals, which we repeat until they converge. <strong>Density Fitting</strong> (DF)-SCF is a way of speeding up the procedure by introducing more approximations, although apparently the loss of accuracy is quite minimal.</p>
+<p><code>scf_type df</code>, by the way, refers to the <em>Self-Consistent Field</em> procedure, which is the iterative process of solving the Schrödinger equation repeatedly to update the coefficients describing our orbitals, which we repeat until they converge. <em>Density Fitting</em> (DF)-SCF is a way of speeding up the procedure by introducing more approximations, although apparently the loss of accuracy is quite minimal.</p>
 <p>Running on 4 cores with <code>psi4 psi4_optimise.dat -n 4</code>, it finishes in about 3 minutes.</p>
 <h3 id="step-4-dihedral-scan">Step 4: Dihedral Scan</h3>
 <p>When doing a dihedral scan, what we're doing is fixing this dihedral at a given value, optimising the geometry to calculate the potential energy on the system, rotating the dihedral by a small amount, and repeating. We then return the potential energy vs. dihedral angle at the end, to plot the potential energy vs angle of the dihedral.</p>
