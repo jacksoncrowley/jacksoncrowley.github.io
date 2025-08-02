@@ -190,15 +190,15 @@ blockquote {
 }
 
 /* blog post */
-.protocol time {
+.post time {
     margin-top: 1.0em;
 }
 
-.protocol p {
+.post p {
     margin-bottom: 1.0em;
 }
 
-.protocol h1 {
+.post h1 {
     margin-bottom: 0.5em; /* gives nice spacing for dates in posts */
 }
 

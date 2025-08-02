@@ -8,7 +8,7 @@ from datetime import datetime
 # Load templates
 env = Environment(loader=FileSystemLoader('templates'))
 index_template = env.get_template('index.html')
-protocols_template = env.get_template('protocols.html')
+posts_template = env.get_template('posts.html')
 cv_template = env.get_template('cv.html')
 post_template = env.get_template('post.html')
 
@@ -75,25 +75,23 @@ def generate_index():
     with open(output_path, 'w') as f:
         f.write(index_template.render(active_page='home'))
 
-# Generate protocols page
-def generate_protocols(posts):
-    # Create protocols directory and place index.html inside
-    output_dir = 'docs/protocols'
+# Generate posts listing page
+def generate_posts_page(posts):
+    # Create posts directory and place index.html inside
+    output_dir = 'docs/posts'
     os.makedirs(output_dir, exist_ok=True)
     with open(os.path.join(output_dir, 'index.html'), 'w') as f:
-        f.write(protocols_template.render(posts=posts, active_page='protocols'))
+        f.write(posts_template.render(posts=posts, active_page='posts'))
     
-    # Create a redirect from protocols.html to protocols/
-    with open('docs/protocols.html', 'w') as f:
-        f.write(f'''
-<!DOCTYPE html>
+    # Create a redirect from posts.html to posts/
+    with open('docs/posts.html', 'w') as f:
+        f.write(f'''<!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="refresh" content="0; url=/protocols/">
-        <link rel="canonical" href="{SITE_URL}/protocols/" />
+        <meta http-equiv="refresh" content="0; url=/posts/">
+        <link rel="canonical" href="{SITE_URL}/posts/" />
     </head>
-</html>
-'''.strip())
+</html>''')
 
 # Generate CV
 def generate_cv():
@@ -104,7 +102,7 @@ def generate_cv():
         f.write(cv_template.render(active_page='cv'))
  
 # Generate individual post pages
-def generate_posts(posts):
+def generate_individual_posts(posts):
     for post in posts:
         # Create directory for each post
         post_dir = f'docs/posts/{post.slug}'
@@ -116,15 +114,13 @@ def generate_posts(posts):
         
         # Create a redirect from .html to directory version
         with open(f'docs/posts/{post.slug}.html', 'w') as f:
-            f.write(f'''
-<!DOCTYPE html>
+            f.write(f'''<!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="refresh" content="0; url=/posts/{post.slug}/">
         <link rel="canonical" href="{SITE_URL}/posts/{post.slug}/" />
     </head>
-</html>
-'''.strip())
+</html>''')
 
 # Generate sitemap
 def generate_sitemap(posts):
@@ -140,10 +136,10 @@ def generate_sitemap(posts):
         '  </url>'
     ])
     
-    # Add protocols page
+    # Add posts page
     sitemap_content.extend([
         '  <url>',
-        f'    <loc>{SITE_URL}/protocols/</loc>',
+        f'    <loc>{SITE_URL}/posts/</loc>',
         '    <changefreq>weekly</changefreq>',
         '    <priority>0.8</priority>',
         '  </url>'
@@ -169,9 +165,9 @@ def main():
     copy_static_files()
     posts = load_posts()
     generate_index()
-    generate_protocols(posts)
+    generate_posts_page(posts)  # Generate the posts listing page
     generate_cv()
-    generate_posts(posts)
+    generate_individual_posts(posts)  # Generate individual post pages
     generate_sitemap(posts)
     print("Site generated in 'docs/' directory.")
 
