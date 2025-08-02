@@ -49,9 +49,9 @@ main {
     flex: 1;
 }
 
-main.page-cv {
+/*main.page-cv {
     max-width: calc(var(--maxwidth) * 1.25);
-}
+}*/
 
 h1 {
     font-family: var(--headerfont);
