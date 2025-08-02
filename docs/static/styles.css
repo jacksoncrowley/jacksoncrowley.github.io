@@ -59,6 +59,27 @@ h1 {
     font-weight: 700;
 }
 
+h2 {
+    font-family: var(--headerfont);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+
+h3 {
+    font-family: var(--headerfont);
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+
+h4 {
+    font-family: var(--headerfont);
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+
 p {
     line-height: 2;
 }
