@@ -1,7 +1,7 @@
 /* Imports */
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Figtree&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap');
 
 /* CSS Variables */
 :root {
@@ -70,9 +70,10 @@ p {
 /* Links */
 a {
     color: var(--fontcolor);
-    text-decoration: underline;
-    text-decoration-color: var(--maincolor);
-    text-decoration-thickness: 2px;
+    text-decoration: none;
+    font-weight: 700;
+    /*text-decoration-color: var(--maincolor);
+    text-decoration-thickness: 2px;*/
     transition: 0.2s;
 } 
 
