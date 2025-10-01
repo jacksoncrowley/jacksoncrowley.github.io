@@ -50,7 +50,7 @@ main {
     flex: 1;
 
     display: grid;
-    grid-template-columns: 100px 1fr;
+    grid-template-columns: 60px 1fr;
     gap: var(--grid-gap);
 }
 
