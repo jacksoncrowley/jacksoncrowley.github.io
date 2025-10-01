@@ -9,7 +9,8 @@
   --headerfont: 'Space Grotesk';
   --mainfont: 'Figtree';
   --codefont: 'IBM Plex Mono';
-  --fontcolor: black;
+  --fontcolor: #2d4539;
+  /*--fontcolor: black; */
   --blockcolor: #f2f4f8;
   --bordercolor: #dde1e6;
   --codecolor: black;
