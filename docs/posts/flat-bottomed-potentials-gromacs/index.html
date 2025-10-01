@@ -25,15 +25,18 @@
 <body>
     <header>
         <h1>Jackson Crowley</h1>
-        <nav>
-            <a href="/" >Home&nbsp;</a>
-            <a href="/posts/" >Posts&nbsp;</a>
-            <a href="/cv/" >CV&nbsp;</a>
-        </nav>
         <hr>
     </header>
 
     <main class="post">
+      <aside class="sidebar">
+    <nav>
+        <a href="/" >Home&nbsp;</a>
+        <a href="/posts/" >Posts&nbsp;</a>
+        <a href="/cv/" >CV&nbsp;</a>
+    </nav>
+</aside>
+      <div class="content">
         <p>Flat bottomed potentials (FBPs) are a unique type of restraint we can apply to specific particles in a molecular dynamics simulation. </p>
 <p>In short, we define <em>a fixed geometric region within the simulation box to which certain atoms will either be attracted or repelled</em>.</p>
 <p>They're also a little tricky to understand from a technical perspective.</p>
@@ -134,6 +137,7 @@ with the most important parameters being:</p>
 <li>You can check the <code>.log</code> file to make sure your FBP is actually running; there should be an entry <code>Flat-b. P-R.</code>. If it shows a 0.00000, this means that no particles are currently being affected by the FBPs.</li>
 <li><em>If an FBP has been defined in the topology, it will not run without a restraints.gro</em> file, which is flagged at the <code>gmx grompp</code> step with <code>-r</code>. If you're not sure if you've got it working properly, try <code>grompp</code>-ing without <code>-r</code>.</li>
 </ul>
+      </div>
     </main>
     <footer>
         <p>&copy; 2025 Jackson Crowley</p>

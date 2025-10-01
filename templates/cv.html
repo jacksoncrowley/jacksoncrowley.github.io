@@ -2,12 +2,14 @@
 {% include 'header.html' %}
 {% endwith %}
 <main class="page-{{ active_page }}">
+      {% include 'nav.html' %}
+      <div class="content">
       <section id="cv">
         <h2>Education</h2>
         
         <h3> PhD, Molecular Biophysics</h3>
         <blockquote>
-        <p><em>2022 - Present</em></p>
+        <p><em>2022 - 2025</em></p>
         <p>Université Claude Bernard Lyon 1 &amp; CNRS, Lyon, France</p>
         <p><strong>Thesis Title:</strong> <em>Advanced Simulations of Lipid Droplet Biogenesis</em></p>
         <p><strong>Advisor:</strong> Luca Monticelli</p>
@@ -62,5 +64,6 @@
  
      
     </section>
+      </div>
     </main>
 {% include 'footer.html' %}

@@ -10,12 +10,12 @@
   --mainfont: 'Figtree';
   --codefont: 'IBM Plex Mono';
   --fontcolor: #2d4539;
-  /*--fontcolor: black; */
   --blockcolor: #f2f4f8;
   --bordercolor: #dde1e6;
   --codecolor: black;
   --footercolor: #878d96;
   --maxwidth: 800px;
+  --grid-gap: 40px;
   --body-bg: #fbfbfb;
   --spacing: 20px;
 }
@@ -48,7 +48,20 @@ main {
     margin: 0 auto;
     width: 100%;
     flex: 1;
+
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: var(--grid-gap);
 }
+
+
+.sidebar {
+    grid-column: 1;
+}
+.content {
+    grid-column: 2;
+}
+
 
 /*main.page-cv {
     max-width: calc(var(--maxwidth) * 1.25);
@@ -109,7 +122,7 @@ a:hover {
 
 /* Header and Navigation */
 header {
-    color: var(--fontcolor);
+    color: var(--maincolor);
     padding: var(--spacing) 0;
     max-width: var(--maxwidth);
     margin: auto;
@@ -129,9 +142,9 @@ header {
 }
 
 nav {
-    max-width: var(--maxwidth);
-    width: 100%;
-    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75em;
 }
 
 nav a {
@@ -147,7 +160,7 @@ nav a[data-current-page="true"] {
 
 hr {
     margin-top: 0.5em;
-    border: 1px dashed var(--maincolor);
+    border: 2px solid var(--maincolor);
     margin-bottom: 0.5em;
 }
 
