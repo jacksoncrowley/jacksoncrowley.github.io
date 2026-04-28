@@ -61,6 +61,11 @@ main {
     grid-column: 2;
 }
 
+.content img {
+    max-width: 100%;
+    height: auto;
+}
+
 h1 {
     font-family: var(--headerfont);
     font-size: 2rem;
@@ -191,7 +196,6 @@ pre, code {
 pre {
     padding: 1em;
     overflow-x: auto;
-    overflow: hidden;
     margin: 1em 0;
     border: 1px solid var(--bordercolor);
 }
