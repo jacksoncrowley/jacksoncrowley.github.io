@@ -59,6 +59,7 @@ main {
 
 .content {
     grid-column: 2;
+    min-width: 0;
 }
 
 .content img {
